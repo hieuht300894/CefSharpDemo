@@ -14,6 +14,9 @@ namespace CefSharpDemo
 {
     public partial class frmMain : frmBase
     {
+        string Url = "http://localhost:5002/pages/index.html";
+        StringBuilder strSource = new StringBuilder();
+
         public frmMain()
         {
             InitializeComponent();
@@ -30,7 +33,7 @@ namespace CefSharpDemo
 
             DownloadHandler download = new DownloadHandler(this, barPercent);
 
-            ChromiumWebBrowser browser = new ChromiumWebBrowser("http://localhost:5002/pages/index.html");
+            ChromiumWebBrowser browser = new ChromiumWebBrowser(Url);
             browser.Name = "ChromiumWebBrowser";
             browser.Dock = DockStyle.Fill;
             browser.BrowserSettings = browserSettings;
@@ -61,20 +64,13 @@ namespace CefSharpDemo
         {
             Cef.Shutdown();
         }
-        private async void BtnGetHTML_Click(object sender, EventArgs e)
+        private void BtnGetHTML_Click(object sender, EventArgs e)
         {
             ChromiumWebBrowser browser = tpBrowser.Controls["ChromiumWebBrowser"] as ChromiumWebBrowser;
-            string strSource = await browser.GetSourceAsync();
-            await Task.Factory.StartNew(() =>
-            {
-                BeginInvoke(new Action(() =>
-                {
-                    frmHTMLSource _frm = new frmHTMLSource();
-                    _frm.ResetText();
-                    _frm.SetData(strSource);
-                    _frm.ShowDialog(this);
-                }));
-            });
+            frmHTMLSource _frm = new frmHTMLSource();
+            _frm.ResetText();
+            _frm.SetData(strSource.ToString());
+            _frm.ShowDialog(this);
         }
         private void BtnDevTools_Click(object sender, EventArgs e)
         {
@@ -84,7 +80,7 @@ namespace CefSharpDemo
         private void Browser_FrameLoadStart(object sender, FrameLoadStartEventArgs e)
         {
             ChromiumWebBrowser browser = sender as ChromiumWebBrowser;
-           // barPercent.Value = 50;
+            strSource.Clear();
         }
         private void Download_OnBeforeDownloadFired(object sender, DownloadItem e)
         {
@@ -95,17 +91,7 @@ namespace CefSharpDemo
         private async void Browser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
             ChromiumWebBrowser browser = sender as ChromiumWebBrowser;
-            string strSource = await browser.GetSourceAsync();
-            await Task.Factory.StartNew(() =>
-            {
-                BeginInvoke(new Action(() =>
-                {
-                    frmHTMLSource _frm = new frmHTMLSource();
-                    _frm.ResetText();
-                    _frm.SetData(strSource);
-                    _frm.ShowDialog(this);
-                }));
-            });
+            strSource.Append(await browser.GetSourceAsync());
         }
     }
 

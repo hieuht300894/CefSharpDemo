@@ -26,7 +26,7 @@ namespace CefSharpDemo
 
         public void SetData(string text)
         {
-            txtCode.AppendText(text);
+            txtCode.AppendText(text ?? string.Empty);
         }
         public void ResetData()
         {
