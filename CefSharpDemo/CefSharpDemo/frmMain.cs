@@ -14,46 +14,13 @@ namespace CefSharpDemo
 {
     public partial class frmMain : frmBase
     {
-        string Url = "http://localhost:5002/pages/index.html";
+        //string Url = "www.clker.com/inc/svgedit/svg-editor.html";
+        string Url = "http://localhost/test/";
         StringBuilder strSource = new StringBuilder();
 
         public frmMain()
         {
             InitializeComponent();
-        }
-
-        public void InitBrowser()
-        {
-            CefSettings cefSettings = new CefSettings();
-            Cef.Initialize(cefSettings);
-
-            BrowserSettings browserSettings = new BrowserSettings();
-            browserSettings.FileAccessFromFileUrls = CefState.Enabled;
-            browserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
-
-            DownloadHandler download = new DownloadHandler(this, barPercent);
-
-            ChromiumWebBrowser browser = new ChromiumWebBrowser(Url);
-            browser.Name = "ChromiumWebBrowser";
-            browser.Dock = DockStyle.Fill;
-            browser.BrowserSettings = browserSettings;
-            browser.DownloadHandler = download;
-
-            tpBrowser.Controls.Clear();
-            tpBrowser.Controls.Add(browser);
-
-            btnDevTools.Click -= BtnDevTools_Click;
-            btnDevTools.Click += BtnDevTools_Click;
-            btnGetHTML.Click -= BtnGetHTML_Click;
-            btnGetHTML.Click += BtnGetHTML_Click;
-            browser.FrameLoadStart -= Browser_FrameLoadStart;
-            browser.FrameLoadStart += Browser_FrameLoadStart;
-            browser.FrameLoadEnd -= Browser_FrameLoadEnd;
-            browser.FrameLoadEnd += Browser_FrameLoadEnd;
-            download.OnBeforeDownloadFired -= Download_OnBeforeDownloadFired;
-            download.OnBeforeDownloadFired += Download_OnBeforeDownloadFired;
-            download.OnDownloadUpdatedFired -= Download_OnDownloadUpdatedFired;
-            download.OnDownloadUpdatedFired += Download_OnDownloadUpdatedFired;
         }
 
         protected override void FrmBase_Load(object sender, EventArgs e)
@@ -66,11 +33,11 @@ namespace CefSharpDemo
         }
         private void BtnGetHTML_Click(object sender, EventArgs e)
         {
-            ChromiumWebBrowser browser = tpBrowser.Controls["ChromiumWebBrowser"] as ChromiumWebBrowser;
             frmHTMLSource _frm = new frmHTMLSource();
             _frm.ResetText();
             _frm.SetData(strSource.ToString());
-            _frm.ShowDialog(this);
+            _frm.Show();
+
         }
         private void BtnDevTools_Click(object sender, EventArgs e)
         {
@@ -82,47 +49,62 @@ namespace CefSharpDemo
             ChromiumWebBrowser browser = sender as ChromiumWebBrowser;
             strSource.Clear();
         }
-        private void Download_OnBeforeDownloadFired(object sender, DownloadItem e)
-        {
-        }
-        private void Download_OnDownloadUpdatedFired(object sender, DownloadItem e)
-        {
-        }
         private async void Browser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
             ChromiumWebBrowser browser = sender as ChromiumWebBrowser;
             strSource.Append(await browser.GetSourceAsync());
         }
-    }
-
-    public class DownloadHandler : IDownloadHandler
-    {
-        public event EventHandler<DownloadItem> OnBeforeDownloadFired;
-        public event EventHandler<DownloadItem> OnDownloadUpdatedFired;
-        Form frmMain;
-        ProgressBar progressBar;
-
-        public DownloadHandler(Form frmMain, ProgressBar progressBar)
+        private void BtnClick_Click(object sender, EventArgs e)
         {
-            this.frmMain = frmMain;
-            this.progressBar = progressBar;
+            ChromiumWebBrowser browser = tpBrowser.Controls["ChromiumWebBrowser"] as ChromiumWebBrowser;
+            StringBuilder strScript = new StringBuilder();
+
+            strScript.Append("function triggerMouseEvent (node, eventType) {");
+            strScript.Append("    var clickEvent = document.createEvent ('MouseEvents');");
+            strScript.Append("    clickEvent.initEvent (eventType, true, true);");
+            strScript.Append("    node.dispatchEvent (clickEvent);");
+            strScript.Append("}");
+
+            strScript.Append("function ShowMessage(){alert($('#txtInput').val());}");
+            strScript.Append("$('#txtInput').val('Hello World !!!');");
+            //strScript.Append("$('#btnClick').click();");
+
+            strScript.Append("var targetNode = document.getElementById('btnClick');");
+            strScript.Append("triggerMouseEvent (targetNode, 'mouseover');");
+            strScript.Append("triggerMouseEvent (targetNode, 'mousedown');");
+            strScript.Append("triggerMouseEvent (targetNode, 'mouseup');");
+            strScript.Append("triggerMouseEvent (targetNode, 'click');");
+
+            browser.ExecuteScriptAsync(strScript.ToString());
         }
 
-        public void OnBeforeDownload(IBrowser browser, DownloadItem downloadItem, IBeforeDownloadCallback callback)
+        public void InitBrowser()
         {
-            OnBeforeDownloadFired?.Invoke(this, downloadItem);
+            CefSettings cefSettings = new CefSettings();
+            Cef.Initialize(cefSettings);
 
-            if (!callback.IsDisposed)
-            {
-                using (callback)
-                {
-                    callback.Continue(downloadItem.SuggestedFileName, showDialog: true);
-                }
-            }
-        }
-        public void OnDownloadUpdated(IBrowser browser, DownloadItem downloadItem, IDownloadItemCallback callback)
-        {
-            OnDownloadUpdatedFired?.Invoke(this, downloadItem);
+            BrowserSettings browserSettings = new BrowserSettings();
+            browserSettings.FileAccessFromFileUrls = CefState.Enabled;
+            browserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
+
+            ChromiumWebBrowser browser = new ChromiumWebBrowser(Url);
+            browser.Name = "ChromiumWebBrowser";
+            browser.Dock = DockStyle.Fill;
+            browser.BrowserSettings = browserSettings;
+
+            tpBrowser.Controls.Clear();
+            tpBrowser.Controls.Add(browser);
+
+            btnDevTools.Click -= BtnDevTools_Click;
+            btnDevTools.Click += BtnDevTools_Click;
+            btnGetHTML.Click -= BtnGetHTML_Click;
+            btnGetHTML.Click += BtnGetHTML_Click;
+            browser.FrameLoadStart -= Browser_FrameLoadStart;
+            browser.FrameLoadStart += Browser_FrameLoadStart;
+            browser.FrameLoadEnd -= Browser_FrameLoadEnd;
+            browser.FrameLoadEnd += Browser_FrameLoadEnd;
+            btnClick.Click -= BtnClick_Click;
+            btnClick.Click += BtnClick_Click;
         }
     }
 }
