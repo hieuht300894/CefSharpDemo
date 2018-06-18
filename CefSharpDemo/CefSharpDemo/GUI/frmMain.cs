@@ -150,6 +150,11 @@ namespace CefSharpDemo
                 _browser.InitEventClick();
                 _browser.SendClickByClassName("option-site");
             }));
+            lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
+            {
+                _browser.InitEventClick();
+                _browser.SendClickBy("li[id=a3846f09-54c6-47ba-b64f-415e243f322a] img");
+            }));
 
             curStep = 0;
             numStep = lstSteps.Count;
