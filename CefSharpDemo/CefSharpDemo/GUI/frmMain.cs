@@ -11,6 +11,7 @@ using CefSharp;
 using CefSharp.WinForms;
 using CefSharpDemo.BLL;
 using CefSharpDemo.General;
+using CefSharpDemo.GUI;
 
 namespace CefSharpDemo
 {
@@ -34,7 +35,15 @@ namespace CefSharpDemo
 
         protected override void FrmBase_Load(object sender, EventArgs e)
         {
-            InitBrowser();
+            btnClick.Click -= BtnClick_Click;
+            btnGetHTML.Click -= BtnGetHTML_Click;
+            btnDevTools.Click -= BtnDevTools_Click;
+            btnInsertData.Click -= BtnInsertData_Click;
+
+            btnClick.Click += BtnClick_Click;
+            btnGetHTML.Click += BtnGetHTML_Click;
+            btnDevTools.Click += BtnDevTools_Click;
+            btnInsertData.Click += BtnInsertData_Click;
         }
         protected override void FrmBase_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -124,66 +133,74 @@ namespace CefSharpDemo
             tpBrowser.Controls.Clear();
             tpBrowser.Controls.Add(browser);
 
-            btnDevTools.Click -= BtnDevTools_Click;
-            btnDevTools.Click += BtnDevTools_Click;
-            btnGetHTML.Click -= BtnGetHTML_Click;
-            btnGetHTML.Click += BtnGetHTML_Click;
             browser.FrameLoadStart -= Browser_FrameLoadStart;
-            browser.FrameLoadStart += Browser_FrameLoadStart;
             browser.FrameLoadEnd -= Browser_FrameLoadEnd;
+         
+            browser.FrameLoadStart += Browser_FrameLoadStart;
             browser.FrameLoadEnd += Browser_FrameLoadEnd;
-            btnClick.Click -= BtnClick_Click;
-            btnClick.Click += BtnClick_Click;
 
-            lstSteps.Clear();
-            lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            {
-            }));
-            lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            {
-                _browser.InitMouseHandle();
-                _browser.SendTextById("email-input-login", "hieu");
-                _browser.SendTextById("passw-input-login", "1");
-                _browser.SendMouseHandleById(Define.MOUSE_HANDLE.click, "btnLogin");
-            }));
-            lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            {
-                _browser.InitMouseHandle();
-                _browser.SendMouseHandleByClassName(Define.MOUSE_HANDLE.click, "option-site");
-            }));
-            lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            {
-                _browser.InitMouseHandle();
-                _browser.SendMouseHandle(Define.MOUSE_HANDLE.click, "li[id=a3846f09-54c6-47ba-b64f-415e243f322a] img");
-            }));
-            lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            {
-                _browser.InitMouseHandle();
-                _browser.SendMouseHandleById(Define.MOUSE_HANDLE.mousemove, "new_obj_control");
-                _browser.SendMouseHandleById(Define.MOUSE_HANDLE.mouseover, "new_obj_control");
-                _browser.SendMouseHandleById(Define.MOUSE_HANDLE.click, "create_new_obj_addressbox");
-            }));
-            lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            {
-                _browser.InitMouseHandlePoint();
-                _browser.SendMouseHandle(Define.MOUSE_HANDLE.mousedown, 300, 300);
-                _browser.SendMouseHandle(Define.MOUSE_HANDLE.mousemove, 600, 600);
-                _browser.SendMouseHandle(Define.MOUSE_HANDLE.mouseup, 600, 600);
-            }));
-            lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            {
-                _browser.InitMouseHandlePoint();
-                _browser.SendMouseHandle(Define.MOUSE_HANDLE.click, 450, 450);
-                _browser.SendMouseHandle(Define.MOUSE_HANDLE.click, 450, 450);
-            }));
-            lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            {
-                _browser.InitMouseHandle();
-                _browser.SendMouseHandleById(Define.MOUSE_HANDLE.click, "rBtnDirection_horizontal_addressbox");
-            }));
+            //lstSteps.Clear();
+            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
+            //{
+            //}));
+            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
+            //{
+            //    _browser.InitMouseHandle();
+            //    _browser.SendTextById("email-input-login", "hieu");
+            //    _browser.SendTextById("passw-input-login", "1");
+            //    _browser.SendMouseHandleById(Define.MOUSE_HANDLE.click, "btnLogin");
+            //}));
+            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
+            //{
+            //    _browser.InitMouseHandle();
+            //    _browser.SendMouseHandleByClassName(Define.MOUSE_HANDLE.click, "option-site");
+            //}));
+            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
+            //{
+            //    _browser.InitMouseHandle();
+            //    _browser.SendMouseHandle(Define.MOUSE_HANDLE.click, "li[id=a3846f09-54c6-47ba-b64f-415e243f322a] img");
+            //}));
+            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
+            //{
+            //    _browser.InitMouseHandle();
+            //    _browser.SendMouseHandleById(Define.MOUSE_HANDLE.mousemove, "new_obj_control");
+            //    _browser.SendMouseHandleById(Define.MOUSE_HANDLE.mouseover, "new_obj_control");
+            //    _browser.SendMouseHandleById(Define.MOUSE_HANDLE.click, "create_new_obj_addressbox");
+            //}));
+            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
+            //{
+            //    _browser.InitMouseHandlePoint();
+            //    _browser.SendMouseHandle(Define.MOUSE_HANDLE.mousedown, 300, 300);
+            //    _browser.SendMouseHandle(Define.MOUSE_HANDLE.mousemove, 600, 600);
+            //    _browser.SendMouseHandle(Define.MOUSE_HANDLE.mouseup, 600, 600);
+            //}));
+            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
+            //{
+            //    _browser.InitMouseHandlePoint();
+            //    _browser.SendMouseHandle(Define.MOUSE_HANDLE.click, 450, 450);
+            //    _browser.SendMouseHandle(Define.MOUSE_HANDLE.click, 450, 450);
+            //}));
+            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
+            //{
+            //    _browser.InitMouseHandle();
+            //    _browser.SendMouseHandleById(Define.MOUSE_HANDLE.click, "rBtnDirection_horizontal_addressbox");
+            //}));
 
-            curStep = 0;
-            numStep = lstSteps.Count;
+            //curStep = 0;
+            //numStep = lstSteps.Count;
+        }
+
+        private void BtnInsertData_Click(object sender, EventArgs e)
+        {
+            frmInsertData frm = new frmInsertData();
+            frm.ResendData = new frmInsertData.SendData(new Action<List<Action<ChromiumWebBrowser>>>((_lstSteps) =>
+            {
+                curStep = 0;
+                numStep = _lstSteps.Count;
+                lstSteps = _lstSteps;
+                InitBrowser();
+            }));
+            frm.ShowDialog(this);
         }
     }
 }

@@ -32,8 +32,9 @@
             this.tpMain = new System.Windows.Forms.TableLayoutPanel();
             this.tpButtons = new System.Windows.Forms.TableLayoutPanel();
             this.btnGetHTML = new System.Windows.Forms.Button();
-            this.tpBrowser = new System.Windows.Forms.TableLayoutPanel();
             this.btnClick = new System.Windows.Forms.Button();
+            this.tpBrowser = new System.Windows.Forms.TableLayoutPanel();
+            this.btnInsertData = new System.Windows.Forms.Button();
             this.tpMain.SuspendLayout();
             this.tpButtons.SuspendLayout();
             this.SuspendLayout();
@@ -65,14 +66,16 @@
             // tpButtons
             // 
             this.tpButtons.AutoScroll = true;
-            this.tpButtons.ColumnCount = 4;
+            this.tpButtons.ColumnCount = 5;
             this.tpButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tpButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tpButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tpButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tpButtons.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 357F));
             this.tpButtons.Controls.Add(this.btnGetHTML, 1, 0);
             this.tpButtons.Controls.Add(this.btnDevTools, 0, 0);
             this.tpButtons.Controls.Add(this.btnClick, 2, 0);
+            this.tpButtons.Controls.Add(this.btnInsertData, 3, 0);
             this.tpButtons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tpButtons.Location = new System.Drawing.Point(3, 3);
             this.tpButtons.Name = "tpButtons";
@@ -90,6 +93,15 @@
             this.btnGetHTML.Text = "Get HTML";
             this.btnGetHTML.UseVisualStyleBackColor = true;
             // 
+            // btnClick
+            // 
+            this.btnClick.Location = new System.Drawing.Point(215, 3);
+            this.btnClick.Name = "btnClick";
+            this.btnClick.Size = new System.Drawing.Size(100, 25);
+            this.btnClick.TabIndex = 3;
+            this.btnClick.Text = "Click";
+            this.btnClick.UseVisualStyleBackColor = true;
+            // 
             // tpBrowser
             // 
             this.tpBrowser.ColumnCount = 1;
@@ -102,14 +114,14 @@
             this.tpBrowser.Size = new System.Drawing.Size(878, 366);
             this.tpBrowser.TabIndex = 4;
             // 
-            // btnClick
+            // btnInsertData
             // 
-            this.btnClick.Location = new System.Drawing.Point(215, 3);
-            this.btnClick.Name = "btnClick";
-            this.btnClick.Size = new System.Drawing.Size(100, 25);
-            this.btnClick.TabIndex = 3;
-            this.btnClick.Text = "Click";
-            this.btnClick.UseVisualStyleBackColor = true;
+            this.btnInsertData.Location = new System.Drawing.Point(321, 3);
+            this.btnInsertData.Name = "btnInsertData";
+            this.btnInsertData.Size = new System.Drawing.Size(100, 25);
+            this.btnInsertData.TabIndex = 4;
+            this.btnInsertData.Text = "Insert Data";
+            this.btnInsertData.UseVisualStyleBackColor = true;
             // 
             // frmMain
             // 
@@ -133,6 +145,7 @@
         private System.Windows.Forms.TableLayoutPanel tpButtons;
         private System.Windows.Forms.TableLayoutPanel tpBrowser;
         private System.Windows.Forms.Button btnClick;
+        private System.Windows.Forms.Button btnInsertData;
     }
 }
 
