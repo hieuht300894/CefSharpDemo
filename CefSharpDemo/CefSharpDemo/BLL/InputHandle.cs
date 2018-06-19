@@ -18,5 +18,9 @@ namespace CefSharpDemo.BLL
         {
             return browser.EvaluateScriptAsync($"$('#{name}').val('{value}');").Result;
         }
+        public static JavascriptResponse SendText(this ChromiumWebBrowser browser, string query, string value)
+        {
+            return browser.EvaluateScriptAsync($"document.querySelector('{query}').value = '{value}';").Result;
+        }
     }
 }

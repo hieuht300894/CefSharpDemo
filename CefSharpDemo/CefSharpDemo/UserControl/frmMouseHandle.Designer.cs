@@ -50,7 +50,7 @@
             this.tpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+            this.tpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tpMain.Controls.Add(this.label3, 1, 3);
             this.tpMain.Controls.Add(this.chkIsPosition, 2, 3);
             this.tpMain.Controls.Add(this.numX, 3, 3);
@@ -63,19 +63,19 @@
             this.tpMain.Location = new System.Drawing.Point(0, 0);
             this.tpMain.Name = "tpMain";
             this.tpMain.RowCount = 5;
-            this.tpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
+            this.tpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
-            this.tpMain.Size = new System.Drawing.Size(300, 150);
+            this.tpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tpMain.Size = new System.Drawing.Size(304, 141);
             this.tpMain.TabIndex = 0;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Location = new System.Drawing.Point(23, 98);
+            this.label3.Location = new System.Drawing.Point(23, 96);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(44, 26);
             this.label3.TabIndex = 2;
@@ -86,7 +86,7 @@
             // 
             this.chkIsPosition.AutoSize = true;
             this.chkIsPosition.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chkIsPosition.Location = new System.Drawing.Point(73, 101);
+            this.chkIsPosition.Location = new System.Drawing.Point(73, 99);
             this.chkIsPosition.Name = "chkIsPosition";
             this.chkIsPosition.Size = new System.Drawing.Size(15, 20);
             this.chkIsPosition.TabIndex = 3;
@@ -95,7 +95,7 @@
             // numX
             // 
             this.numX.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numX.Location = new System.Drawing.Point(94, 101);
+            this.numX.Location = new System.Drawing.Point(94, 99);
             this.numX.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -107,14 +107,14 @@
             0,
             -2147483648});
             this.numX.Name = "numX";
-            this.numX.Size = new System.Drawing.Size(88, 20);
+            this.numX.Size = new System.Drawing.Size(90, 20);
             this.numX.TabIndex = 6;
             this.numX.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // numY
             // 
             this.numY.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.numY.Location = new System.Drawing.Point(188, 101);
+            this.numY.Location = new System.Drawing.Point(190, 99);
             this.numY.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -126,7 +126,7 @@
             0,
             -2147483648});
             this.numY.Name = "numY";
-            this.numY.Size = new System.Drawing.Size(88, 20);
+            this.numY.Size = new System.Drawing.Size(90, 20);
             this.numY.TabIndex = 7;
             this.numY.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -134,7 +134,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(23, 49);
+            this.label2.Location = new System.Drawing.Point(23, 47);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 49);
             this.label2.TabIndex = 1;
@@ -145,9 +145,9 @@
             // 
             this.tpMain.SetColumnSpan(this.txtQuery, 3);
             this.txtQuery.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtQuery.Location = new System.Drawing.Point(73, 52);
+            this.txtQuery.Location = new System.Drawing.Point(73, 50);
             this.txtQuery.Name = "txtQuery";
-            this.txtQuery.Size = new System.Drawing.Size(203, 43);
+            this.txtQuery.Size = new System.Drawing.Size(207, 43);
             this.txtQuery.TabIndex = 5;
             this.txtQuery.Text = "";
             // 
@@ -155,7 +155,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(23, 22);
+            this.label1.Location = new System.Drawing.Point(23, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 27);
             this.label1.TabIndex = 0;
@@ -168,16 +168,16 @@
             this.cbbHandle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cbbHandle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbbHandle.FormattingEnabled = true;
-            this.cbbHandle.Location = new System.Drawing.Point(73, 25);
+            this.cbbHandle.Location = new System.Drawing.Point(73, 23);
             this.cbbHandle.Name = "cbbHandle";
-            this.cbbHandle.Size = new System.Drawing.Size(203, 21);
+            this.cbbHandle.Size = new System.Drawing.Size(207, 21);
             this.cbbHandle.TabIndex = 4;
             // 
             // frmMouseHandle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(300, 150);
+            this.ClientSize = new System.Drawing.Size(304, 141);
             this.Controls.Add(this.tpMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;

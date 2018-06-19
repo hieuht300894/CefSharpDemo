@@ -88,6 +88,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControl\frmInputHandle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControl\frmInputHandle.Designer.cs">
+      <DependentUpon>frmInputHandle.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\frmMouseHandle.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,6 +121,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UserControl\frmInputHandle.resx">
+      <DependentUpon>frmInputHandle.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControl\frmMouseHandle.resx">
       <DependentUpon>frmMouseHandle.cs</DependentUpon>
     </EmbeddedResource>

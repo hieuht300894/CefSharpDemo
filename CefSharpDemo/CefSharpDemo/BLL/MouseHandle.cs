@@ -23,25 +23,25 @@ namespace CefSharpDemo.BLL
 
             return browser.EvaluateScriptAsync(sbScript.ToString()).Result;
         }
-        public static JavascriptResponse SendMouseHandleById(this ChromiumWebBrowser browser, Define.MOUSE_HANDLE eventType, string value)
+        public static JavascriptResponse SendMouseHandleById(this ChromiumWebBrowser browser, string eventType, string value)
         {
-            return browser.EvaluateScriptAsync($"MouseHandle(document.querySelector('[id={value}]'), '{eventType.ToString()}');").Result;
+            return browser.EvaluateScriptAsync($"MouseHandle(document.querySelector('[id={value}]'), '{eventType}');").Result;
         }
-        public static JavascriptResponse SendMouseHandleByName(this ChromiumWebBrowser browser, Define.MOUSE_HANDLE eventType, string value)
+        public static JavascriptResponse SendMouseHandleByName(this ChromiumWebBrowser browser, string eventType, string value)
         {
-            return browser.EvaluateScriptAsync($"MouseHandle(document.querySelector('[name={value}]'), '{eventType.ToString()}');").Result;
+            return browser.EvaluateScriptAsync($"MouseHandle(document.querySelector('[name={value}]'), '{eventType}');").Result;
         }
-        public static JavascriptResponse SendMouseHandleByClassName(this ChromiumWebBrowser browser, Define.MOUSE_HANDLE eventType, string value)
+        public static JavascriptResponse SendMouseHandleByClassName(this ChromiumWebBrowser browser, string eventType, string value)
         {
-            return browser.EvaluateScriptAsync($"MouseHandle(document.querySelector('[class={value}]'), '{eventType.ToString()}');").Result;
+            return browser.EvaluateScriptAsync($"MouseHandle(document.querySelector('[class={value}]'), '{eventType}');").Result;
         }
-        public static JavascriptResponse SendMouseHandle(this ChromiumWebBrowser browser, Define.MOUSE_HANDLE eventType, string tagName, string attrName, string value)
+        public static JavascriptResponse SendMouseHandle(this ChromiumWebBrowser browser, string eventType, string tagName, string attrName, string value)
         {
-            return browser.EvaluateScriptAsync($"MouseHandle(document.querySelector('{tagName}[{attrName}={value}]'), '{eventType.ToString()}');").Result;
+            return browser.EvaluateScriptAsync($"MouseHandle(document.querySelector('{tagName}[{attrName}={value}]'), '{eventType}');").Result;
         }
-        public static JavascriptResponse SendMouseHandle(this ChromiumWebBrowser browser, Define.MOUSE_HANDLE eventType, string value)
+        public static JavascriptResponse SendMouseHandle(this ChromiumWebBrowser browser, string eventType, string value)
         {
-            return browser.EvaluateScriptAsync($"MouseHandle(document.querySelector('{value}'), '{eventType.ToString()}');").Result;
+            return browser.EvaluateScriptAsync($"MouseHandle(document.querySelector('{value}'), '{eventType}');").Result;
         }
 
         public static void InitMouseHandlePoint(this ChromiumWebBrowser browser)
@@ -72,13 +72,13 @@ namespace CefSharpDemo.BLL
 
             var result = browser.EvaluateScriptAsync(sbScript.ToString()).Result;
         }
-        public static void SendMouseHandle(this ChromiumWebBrowser browser, Define.MOUSE_HANDLE eventType, int x, int y)
+        public static void SendMouseHandle(this ChromiumWebBrowser browser, string eventType, int x, int y)
         {
-            var result = browser.EvaluateScriptAsync($"MouseHandlePoint(document, '{eventType.ToString()}', {x}, {y});").Result;
+            var result = browser.EvaluateScriptAsync($"MouseHandlePoint(document, '{eventType}', {x}, {y});").Result;
         }
-        public static void SendMouseHandleById(this ChromiumWebBrowser browser, Define.MOUSE_HANDLE eventType, string value, int x, int y)
+        public static void SendMouseHandleById(this ChromiumWebBrowser browser, string eventType, string value, int x, int y)
         {
-            var result = browser.EvaluateScriptAsync($"MouseHandlePoint(document.querySelector('[id={value}]'), '{eventType.ToString()}', {x}, {y});").Result;
+            var result = browser.EvaluateScriptAsync($"MouseHandlePoint(document.querySelector('[id={value}]'), '{eventType}', {x}, {y});").Result;
         }
     }
 }

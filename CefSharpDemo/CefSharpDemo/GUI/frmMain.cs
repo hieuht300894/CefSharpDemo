@@ -35,6 +35,9 @@ namespace CefSharpDemo
 
         protected override void FrmBase_Load(object sender, EventArgs e)
         {
+            CefSettings cefSettings = new CefSettings();
+            Cef.Initialize(cefSettings);
+
             btnClick.Click -= BtnClick_Click;
             btnGetHTML.Click -= BtnGetHTML_Click;
             btnDevTools.Click -= BtnDevTools_Click;
@@ -117,10 +120,7 @@ namespace CefSharpDemo
         }
 
         public void InitBrowser()
-        {
-            CefSettings cefSettings = new CefSettings();
-            Cef.Initialize(cefSettings);
-
+        {       
             BrowserSettings browserSettings = new BrowserSettings();
             browserSettings.FileAccessFromFileUrls = CefState.Enabled;
             browserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
@@ -192,6 +192,7 @@ namespace CefSharpDemo
 
         private void BtnInsertData_Click(object sender, EventArgs e)
         {
+            ChromiumWebBrowser browser = tpBrowser.Controls["ChromiumWebBrowser"] as ChromiumWebBrowser;
             frmInsertData frm = new frmInsertData();
             frm.ResendData = new frmInsertData.SendData(new Action<List<Action<ChromiumWebBrowser>>>((_lstSteps) =>
             {
@@ -200,7 +201,7 @@ namespace CefSharpDemo
                 lstSteps = _lstSteps;
                 InitBrowser();
             }));
-            frm.ShowDialog(this);
+            frm.Show();
         }
     }
 }
