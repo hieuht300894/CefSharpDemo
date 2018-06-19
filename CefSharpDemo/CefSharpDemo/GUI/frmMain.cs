@@ -155,6 +155,18 @@ namespace CefSharpDemo
                 _browser.InitEventClick();
                 _browser.SendClickBy("li[id=a3846f09-54c6-47ba-b64f-415e243f322a] img");
             }));
+            lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
+            {
+                _browser.InitEventClick();
+                _browser.SendClickById("u_create_new_obj");
+                _browser.SendClickById("create_new_obj_addressbox");
+            }));
+            lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
+            {
+                _browser.InitEventClickPoint();
+                _browser.SendMouseDown(300, 300);
+                _browser.SendMouseMove(500, 500);
+            }));
 
             curStep = 0;
             numStep = lstSteps.Count;
