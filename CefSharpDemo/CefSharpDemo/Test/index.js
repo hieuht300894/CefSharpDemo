@@ -6,22 +6,46 @@ $('#btnClick1').on('click', function (e) {
     console.clear();
     console.log('btnClick1: click');
 
-    var elemArea = document.getElementById('area');
-    var startX = 308;
-    var startY = 308;
-    var endX = 508;
-    var endY = 508;
+    //var elemArea = document.getElementById('area');
+    //var startX = 308;
+    //var startY = 308;
+    //var endX = 508;
+    //var endY = 508;
 
-    for (var i = startX; i <= endX; i++) {
-        for (var j = startY; j <= endY; j++) {
-            if (i == startX && j == startY)
-                MouseClick(document, 'mousedown', i, j);
-            else if (i == endX && j == endY)
-                MouseClick(document, 'mousedown', i, j);
-            else
-                MouseClick(document, 'mousemove', i, j);
-        }
-    }
+    //for (var i = startX; i <= endX; i++) {
+    //    for (var j = startY; j <= endY; j++) {
+    //        if (i == startX && j == startY)
+    //            MouseClick(document, 'mousedown', i, j);
+    //        else if (i == endX && j == endY)
+    //            MouseClick(document, 'mousedown', i, j);
+    //        else
+    //            MouseClick(document, 'mousemove', i, j);
+    //    }
+    //}
+
+    //MouseClick(document, 'mousedown', 308, 308);
+});
+
+$('#btnClick1').on('mouseover', function (e) {
+    console.clear();
+    console.log('btnClick1: mouseover');
+
+    //var elemArea = document.getElementById('area');
+    //var startX = 308;
+    //var startY = 308;
+    //var endX = 508;
+    //var endY = 508;
+
+    //for (var i = startX; i <= endX; i++) {
+    //    for (var j = startY; j <= endY; j++) {
+    //        if (i == startX && j == startY)
+    //            MouseClick(document, 'mousedown', i, j);
+    //        else if (i == endX && j == endY)
+    //            MouseClick(document, 'mousedown', i, j);
+    //        else
+    //            MouseClick(document, 'mousemove', i, j);
+    //    }
+    //}
 
     //MouseClick(document, 'mousedown', 308, 308);
 });

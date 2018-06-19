@@ -61,6 +61,7 @@
     <Compile Include="BLL\DownloadHandler.cs" />
     <Compile Include="BLL\InputHandle.cs" />
     <Compile Include="BLL\MouseHandle.cs" />
+    <Compile Include="General\Define.cs" />
     <Compile Include="GUI\frmBase.cs">
       <SubType>Form</SubType>
     </Compile>
