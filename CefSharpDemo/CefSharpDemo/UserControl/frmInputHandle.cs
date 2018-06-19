@@ -17,6 +17,14 @@ namespace CefSharpDemo.UserControl
             InitializeComponent();
             TopLevel = false;
         }
+        public frmInputHandle( string strQuery,  string strValue)
+        {
+            InitializeComponent();
+            TopLevel = false;
+
+            txtQuery.Text = strQuery;
+            txtValue.Text = strValue;
+        }
 
         protected override void FrmBase_Load(object sender, EventArgs e)
         {

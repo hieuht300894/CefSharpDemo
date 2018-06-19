@@ -16,13 +16,30 @@ namespace CefSharpDemo.UserControl
         {
             InitializeComponent();
             TopLevel = false;
+
+            cbbHandle.Items.AddRange(new string[] { "Click", "MouseDown", "MouseUp", "MouseOver", "MouseMove", "MouseOut" });
+            chkIsPosition.Checked = true;
+        }
+        public frmMouseHandle(string strHandle, string strQuery, bool isPosition, int iX, int iY)
+        {
+            InitializeComponent();
+            TopLevel = false;
+
+            cbbHandle.Items.AddRange(new string[] { "Click", "MouseDown", "MouseUp", "MouseOver", "MouseMove", "MouseOut" });
+            chkIsPosition.Checked = true;
+
+            cbbHandle.SelectedIndex = cbbHandle.Items.IndexOf(strHandle);
+            txtQuery.Text = strQuery;
+            chkIsPosition.Checked = isPosition;
+            numX.Value = iX;
+            numY.Value = iY;
+
+            numX.Enabled = chkIsPosition.Checked;
+            numY.Enabled = chkIsPosition.Checked;
         }
 
         protected override void FrmBase_Load(object sender, EventArgs e)
         {
-            cbbHandle.Items.AddRange(new string[] { "Click", "MouseDown", "MouseUp", "MouseOver", "MouseMove", "MouseOut" });
-            chkIsPosition.Checked = true;
-
             chkIsPosition.CheckedChanged -= ChkIsPosition_CheckedChanged;
             chkIsPosition.CheckedChanged += ChkIsPosition_CheckedChanged;
         }

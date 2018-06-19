@@ -8,14 +8,22 @@ namespace CefSharpDemo.General
 {
     public static class Define
     {
-        public enum MOUSE_HANDLE
-        {
-            click = 0,
-            mousedown = 1,
-            mouseup = 2,
-            mouseover = 3,
-            mousemove = 4,
-            mouseout = 5
-        }
+        public const string Click = "click";
+        public const string MouseDown = "mousedown";
+        public const string MouseUp = "mouseup";
+        public const string MouseOver = "mouseover";
+        public const string MouseMove = "mousemove";
+        public const string MouseOut = "mouseout";
+        public const string Step = "Step";
+        public const string Type = "Type";
+        public const string Handle = "Handle";
+        public const string Query = "Query";
+        public const string Value = "Value";
+        public const string IsPosition = "IsPosition";
+        public const string PositionX = "PositionX";
+        public const string PositionY = "PositionY";
+        public const string Input = "Input";
+        public const string Mouse = "Mouse";
+        public const string Root = "Root";
     }
 }
