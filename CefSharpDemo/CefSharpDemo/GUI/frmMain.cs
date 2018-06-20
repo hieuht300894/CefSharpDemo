@@ -20,13 +20,11 @@ namespace CefSharpDemo
     {
         //string Url = "www.clker.com/inc/svgedit/svg-editor.html";
         //string Url = "http://localhost/test/";
-        string Url = "http://10.88.16.93:2695/";
+        string Url = "http://localhost:2695/";
         StringBuilder strSource = new StringBuilder();
         List<ActionData> lstSteps = new List<ActionData>();
         int curStep = 0;
         int numStep = 0;
-        Task task;
-
         public frmMain()
         {
             InitializeComponent();
@@ -74,41 +72,15 @@ namespace CefSharpDemo
             ChromiumWebBrowser browser = sender as ChromiumWebBrowser;
             strSource.Append(await browser.GetSourceAsync());
 
-            if (curStep < numStep)
-            {
-                lstSteps[curStep].Action(browser);
-            }
-            curStep++;
+            //if (curStep < numStep)
+            //{
+            //    lstSteps[curStep].Action(browser);
+            //}
+            //curStep++;
         }
         private void BtnClick_Click(object sender, EventArgs e)
         {
             ChromiumWebBrowser browser = tpBrowser.Controls["ChromiumWebBrowser"] as ChromiumWebBrowser;
-            //StringBuilder strScript = new StringBuilder();
-
-            //strScript.Append("function triggerMouseEvent (node, eventType) {");
-            //strScript.Append("    var clickEvent = document.createEvent ('MouseEvents');");
-            //strScript.Append("    clickEvent.initEvent (eventType, true, true);");
-            //strScript.Append("    node.dispatchEvent (clickEvent);");
-            //strScript.Append("}");
-
-            //strScript.Append("function ShowMessage(){alert($('#txtInput').val());}");
-            //strScript.Append("$('#txtInput').val('Hello World !!!');");
-            ////strScript.Append("$('#btnClick').click();");
-
-            //strScript.Append("var targetNode = document.getElementById('btnClick');");
-            //strScript.Append("triggerMouseEvent (targetNode, 'mouseover');");
-            //strScript.Append("triggerMouseEvent (targetNode, 'mousedown');");
-            //strScript.Append("triggerMouseEvent (targetNode, 'mouseup');");
-            //strScript.Append("triggerMouseEvent (targetNode, 'click');");
-
-            //browser.ExecuteScriptAsync(strScript.ToString());
-
-            //var a = browser.SendTextById("email-input-login", "hieu");
-            //var b = browser.SendTextById("passw-input-login", "1");
-            //var c = browser.InitEventClick();
-            //var d = browser.SendClickById("btnLogin");
-            //var f = browser.SendClickByClassName("option-site");
-
             if (curStep < numStep)
             {
                 lstSteps[curStep].Action(browser);
@@ -117,7 +89,6 @@ namespace CefSharpDemo
         }
         private void BtnInsertData_Click(object sender, EventArgs e)
         {
-            ChromiumWebBrowser browser = tpBrowser.Controls["ChromiumWebBrowser"] as ChromiumWebBrowser;
             frmInsertData frm = new frmInsertData();
             frm.ResendData = new frmInsertData.SendData(new Action<List<ActionData>>((_lstSteps) =>
             {
@@ -125,15 +96,6 @@ namespace CefSharpDemo
                 numStep = _lstSteps.Count;
                 lstSteps = _lstSteps;
 
-                //int prevIndex = 0;
-                //task = new Task(() => { });         
-                //List<Task> lstTasks = new List<Task>();
-                //lstTasks.Add(task);
-                //lstSteps.ForEach(x =>
-                //{
-                //    lstTasks[prevIndex].ContinueWith((_task) => x.Action);
-                //    prevIndex++;
-                //});
                 InitBrowser();
             }));
             frm.Show();
@@ -158,56 +120,6 @@ namespace CefSharpDemo
 
             browser.FrameLoadStart += Browser_FrameLoadStart;
             browser.FrameLoadEnd += Browser_FrameLoadEnd;
-
-            //lstSteps.Clear();
-            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            //{
-            //}));
-            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            //{
-            //    _browser.InitMouseHandle();
-            //    _browser.SendTextById("email-input-login", "hieu");
-            //    _browser.SendTextById("passw-input-login", "1");
-            //    _browser.SendMouseHandleById(Define.MOUSE_HANDLE.click, "btnLogin");
-            //}));
-            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            //{
-            //    _browser.InitMouseHandle();
-            //    _browser.SendMouseHandleByClassName(Define.MOUSE_HANDLE.click, "option-site");
-            //}));
-            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            //{
-            //    _browser.InitMouseHandle();
-            //    _browser.SendMouseHandle(Define.MOUSE_HANDLE.click, "li[id=a3846f09-54c6-47ba-b64f-415e243f322a] img");
-            //}));
-            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            //{
-            //    _browser.InitMouseHandle();
-            //    _browser.SendMouseHandleById(Define.MOUSE_HANDLE.mousemove, "new_obj_control");
-            //    _browser.SendMouseHandleById(Define.MOUSE_HANDLE.mouseover, "new_obj_control");
-            //    _browser.SendMouseHandleById(Define.MOUSE_HANDLE.click, "create_new_obj_addressbox");
-            //}));
-            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            //{
-            //    _browser.InitMouseHandlePoint();
-            //    _browser.SendMouseHandle(Define.MOUSE_HANDLE.mousedown, 300, 300);
-            //    _browser.SendMouseHandle(Define.MOUSE_HANDLE.mousemove, 600, 600);
-            //    _browser.SendMouseHandle(Define.MOUSE_HANDLE.mouseup, 600, 600);
-            //}));
-            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            //{
-            //    _browser.InitMouseHandlePoint();
-            //    _browser.SendMouseHandle(Define.MOUSE_HANDLE.click, 450, 450);
-            //    _browser.SendMouseHandle(Define.MOUSE_HANDLE.click, 450, 450);
-            //}));
-            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            //{
-            //    _browser.InitMouseHandle();
-            //    _browser.SendMouseHandleById(Define.MOUSE_HANDLE.click, "rBtnDirection_horizontal_addressbox");
-            //}));
-
-            //curStep = 0;
-            //numStep = lstSteps.Count;
         }
     }
 }

@@ -221,6 +221,14 @@ namespace CefSharpDemo.GUI
         {
             SaveFile();
         }
+        private void BtnGroup_Click(object sender, EventArgs e)
+        {
+            GroupBox groupBox = new GroupBox();
+            groupBox.Size = new Size(300, 300);
+            groupBox.Show();
+
+            fpBody.Controls.Add(groupBox);
+        }
 
         void InitEvent()
         {
@@ -229,14 +237,15 @@ namespace CefSharpDemo.GUI
             btnDone.Click -= BtnDone_Click;
             btnLoad.Click -= BtnLoad_Click;
             btnSave.Click -= BtnSave_Click;
+            btnGroup.Click -= BtnGroup_Click;
 
             btnMouse.Click += BtnMouse_Click;
             btnInput.Click += BtnInput_Click;
             btnDone.Click += BtnDone_Click;
             btnLoad.Click += BtnLoad_Click;
             btnSave.Click += BtnSave_Click;
+            btnGroup.Click += BtnGroup_Click;
         }
-
         void LoadFile()
         {
             OpenFileDialog dialog = new OpenFileDialog();

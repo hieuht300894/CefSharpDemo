@@ -32,11 +32,12 @@
             this.tpHeader = new System.Windows.Forms.TableLayoutPanel();
             this.btnInput = new System.Windows.Forms.Button();
             this.btnMouse = new System.Windows.Forms.Button();
+            this.btnGroup = new System.Windows.Forms.Button();
             this.tpFooter = new System.Windows.Forms.TableLayoutPanel();
-            this.btnDone = new System.Windows.Forms.Button();
             this.btnLoad = new System.Windows.Forms.Button();
-            this.fpBody = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnDone = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
+            this.fpBody = new System.Windows.Forms.FlowLayoutPanel();
             this.tpMain.SuspendLayout();
             this.tpHeader.SuspendLayout();
             this.tpFooter.SuspendLayout();
@@ -61,12 +62,14 @@
             // 
             // tpHeader
             // 
-            this.tpHeader.ColumnCount = 3;
+            this.tpHeader.ColumnCount = 4;
+            this.tpHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tpHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tpHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tpHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tpHeader.Controls.Add(this.btnInput, 1, 0);
             this.tpHeader.Controls.Add(this.btnMouse, 0, 0);
+            this.tpHeader.Controls.Add(this.btnGroup, 2, 0);
             this.tpHeader.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tpHeader.Location = new System.Drawing.Point(3, 3);
             this.tpHeader.Name = "tpHeader";
@@ -93,6 +96,15 @@
             this.btnMouse.Text = "Mouse";
             this.btnMouse.UseVisualStyleBackColor = true;
             // 
+            // btnGroup
+            // 
+            this.btnGroup.Location = new System.Drawing.Point(215, 3);
+            this.btnGroup.Name = "btnGroup";
+            this.btnGroup.Size = new System.Drawing.Size(100, 25);
+            this.btnGroup.TabIndex = 1;
+            this.btnGroup.Text = "Group";
+            this.btnGroup.UseVisualStyleBackColor = true;
+            // 
             // tpFooter
             // 
             this.tpFooter.ColumnCount = 4;
@@ -111,15 +123,6 @@
             this.tpFooter.Size = new System.Drawing.Size(878, 31);
             this.tpFooter.TabIndex = 2;
             // 
-            // btnDone
-            // 
-            this.btnDone.Location = new System.Drawing.Point(775, 3);
-            this.btnDone.Name = "btnDone";
-            this.btnDone.Size = new System.Drawing.Size(100, 25);
-            this.btnDone.TabIndex = 1;
-            this.btnDone.Text = "Done";
-            this.btnDone.UseVisualStyleBackColor = true;
-            // 
             // btnLoad
             // 
             this.btnLoad.Location = new System.Drawing.Point(563, 3);
@@ -129,14 +132,14 @@
             this.btnLoad.Text = "Load";
             this.btnLoad.UseVisualStyleBackColor = true;
             // 
-            // fpBody
+            // btnDone
             // 
-            this.fpBody.AutoScroll = true;
-            this.fpBody.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fpBody.Location = new System.Drawing.Point(3, 40);
-            this.fpBody.Name = "fpBody";
-            this.fpBody.Size = new System.Drawing.Size(878, 331);
-            this.fpBody.TabIndex = 3;
+            this.btnDone.Location = new System.Drawing.Point(775, 3);
+            this.btnDone.Name = "btnDone";
+            this.btnDone.Size = new System.Drawing.Size(100, 25);
+            this.btnDone.TabIndex = 1;
+            this.btnDone.Text = "Done";
+            this.btnDone.UseVisualStyleBackColor = true;
             // 
             // btnSave
             // 
@@ -146,6 +149,15 @@
             this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            // 
+            // fpBody
+            // 
+            this.fpBody.AutoScroll = true;
+            this.fpBody.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fpBody.Location = new System.Drawing.Point(3, 40);
+            this.fpBody.Name = "fpBody";
+            this.fpBody.Size = new System.Drawing.Size(878, 331);
+            this.fpBody.TabIndex = 3;
             // 
             // frmInsertData
             // 
@@ -173,5 +185,6 @@
         private System.Windows.Forms.FlowLayoutPanel fpBody;
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnGroup;
     }
 }
