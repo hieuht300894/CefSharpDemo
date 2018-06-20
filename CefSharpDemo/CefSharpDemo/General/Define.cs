@@ -14,6 +14,7 @@ namespace CefSharpDemo.General
         public const string MouseOver = "mouseover";
         public const string MouseMove = "mousemove";
         public const string MouseOut = "mouseout";
+        public const string DblClick = "dblclick";
         public const string Step = "Step";
         public const string Type = "Type";
         public const string Handle = "Handle";

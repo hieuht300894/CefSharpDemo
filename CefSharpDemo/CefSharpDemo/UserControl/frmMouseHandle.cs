@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CefSharpDemo.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,7 +18,9 @@ namespace CefSharpDemo.UserControl
             InitializeComponent();
             TopLevel = false;
 
-            cbbHandle.Items.AddRange(new string[] { "Click", "MouseDown", "MouseUp", "MouseOver", "MouseMove", "MouseOut" });
+            cbbHandle.DataSource = MouseData.GetData().ToArray();
+            cbbHandle.DisplayMember = "Name";
+            cbbHandle.ValueMember = "Value";
             chkIsPosition.Checked = true;
         }
         public frmMouseHandle(string strHandle, string strQuery, bool isPosition, int iX, int iY)
@@ -25,10 +28,12 @@ namespace CefSharpDemo.UserControl
             InitializeComponent();
             TopLevel = false;
 
-            cbbHandle.Items.AddRange(new string[] { "Click", "MouseDown", "MouseUp", "MouseOver", "MouseMove", "MouseOut" });
+            cbbHandle.DataSource = MouseData.GetData().ToArray();
+            cbbHandle.DisplayMember = "Name";
+            cbbHandle.ValueMember = "Value";
             chkIsPosition.Checked = true;
 
-            cbbHandle.SelectedIndex = cbbHandle.Items.IndexOf(strHandle);
+            cbbHandle.SelectedValue = strHandle;
             txtQuery.Text = strQuery;
             chkIsPosition.Checked = isPosition;
             numX.Value = iX;
@@ -51,7 +56,7 @@ namespace CefSharpDemo.UserControl
 
         public void GetData(out string strHandle, out string strQuery, out bool isPosition, out int iX, out int iY)
         {
-            strHandle = cbbHandle.Text.Trim();
+            strHandle = cbbHandle.SelectedValue.ToString();
             strQuery = txtQuery.Text.Trim();
             isPosition = chkIsPosition.Checked;
             iX = Convert.ToInt32(numX.Value);

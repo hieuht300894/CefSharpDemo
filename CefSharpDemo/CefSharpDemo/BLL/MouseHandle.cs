@@ -16,7 +16,7 @@ namespace CefSharpDemo.BLL
             StringBuilder sbScript = new StringBuilder();
             sbScript.AppendLine("function MouseHandle(element, eventType) {");
             sbScript.AppendLine("    var clickEvent = document.createEvent('MouseEvents');");
-            sbScript.AppendLine("    clickEvent.initEvent(eventType, true, true);");
+            sbScript.AppendLine("    clickEvent.initMouseEvent(eventType, true, true);");
             sbScript.AppendLine("    element.dispatchEvent(clickEvent);");
             sbScript.AppendLine("    console.log(eventType);");
             sbScript.AppendLine("}");
@@ -72,13 +72,13 @@ namespace CefSharpDemo.BLL
 
             var result = browser.EvaluateScriptAsync(sbScript.ToString()).Result;
         }
-        public static void SendMouseHandle(this ChromiumWebBrowser browser, string eventType, int x, int y)
+        public static JavascriptResponse SendMouseHandle(this ChromiumWebBrowser browser, string eventType, int x, int y)
         {
-            var result = browser.EvaluateScriptAsync($"MouseHandlePoint(document, '{eventType}', {x}, {y});").Result;
+            return browser.EvaluateScriptAsync($"MouseHandlePoint(document, '{eventType}', {x}, {y});").Result;
         }
-        public static void SendMouseHandleById(this ChromiumWebBrowser browser, string eventType, string value, int x, int y)
+        public static JavascriptResponse SendMouseHandleById(this ChromiumWebBrowser browser, string eventType, string value, int x, int y)
         {
-            var result = browser.EvaluateScriptAsync($"MouseHandlePoint(document.querySelector('[id={value}]'), '{eventType}', {x}, {y});").Result;
+            return browser.EvaluateScriptAsync($"MouseHandlePoint(document.querySelector('[id={value}]'), '{eventType}', {x}, {y});").Result;
         }
     }
 }

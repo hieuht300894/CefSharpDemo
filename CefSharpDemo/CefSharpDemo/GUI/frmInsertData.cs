@@ -1,6 +1,7 @@
 ﻿using CefSharp.WinForms;
 using CefSharpDemo.BLL;
 using CefSharpDemo.General;
+using CefSharpDemo.Model;
 using CefSharpDemo.UserControl;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace CefSharpDemo.GUI
 {
     public partial class frmInsertData : frmBase
     {
-        public delegate void SendData(List<Action<ChromiumWebBrowser>> lstSteps);
+        public delegate void SendData(List<ActionData> lstSteps);
         public SendData ResendData;
         int id = 0;
 
@@ -88,10 +89,11 @@ namespace CefSharpDemo.GUI
             //ResendData?.Invoke(lstSteps);
 
             //DialogResult = DialogResult.OK;
-            List<Action<ChromiumWebBrowser>> lstSteps = new List<Action<ChromiumWebBrowser>>();
-            lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
+            List<ActionData> lstSteps = new List<ActionData>();
+            lstSteps.Add(new ActionData()
             {
-            }));
+                Action = new Action<ChromiumWebBrowser>((_browser) => { })
+            });
 
             foreach (Control ctr in fpBody.Controls)
             {
@@ -107,19 +109,59 @@ namespace CefSharpDemo.GUI
 
                     if (isPosition)
                     {
-                        lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
+                        if (strHandle.Equals(Define.DblClick))
                         {
-                            _browser.InitMouseHandlePoint();
-                            _browser.SendMouseHandle(strHandle, iX, iY);
-                        }));
+                            lstSteps.Add(new ActionData()
+                            {
+                                Control = frm,
+                                Action = new Action<ChromiumWebBrowser>((_browser) =>
+                                {
+                                    _browser.InitMouseHandlePoint();
+                                    var result1 = _browser.SendMouseHandle(Define.Click, iX, iY);
+                                    var result2 = _browser.SendMouseHandle(Define.Click, iX, iY);
+                                })
+                            });
+                        }
+                        else
+                        {
+                            lstSteps.Add(new ActionData()
+                            {
+                                Control = frm,
+                                Action = new Action<ChromiumWebBrowser>((_browser) =>
+                                {
+                                    _browser.InitMouseHandlePoint();
+                                    var result = _browser.SendMouseHandle(strHandle, iX, iY);
+                                })
+                            });
+                        }        
                     }
                     else
                     {
-                        lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
+                        if (strHandle.Equals(Define.DblClick))
                         {
-                            _browser.InitMouseHandle();
-                            _browser.SendMouseHandle(strHandle, strQuery);
-                        }));
+                            lstSteps.Add(new ActionData()
+                            {
+                                Control = frm,
+                                Action = new Action<ChromiumWebBrowser>((_browser) =>
+                                {
+                                    _browser.InitMouseHandle();
+                                    var result1 = _browser.SendMouseHandle(Define.Click, strQuery);
+                                    var result2 = _browser.SendMouseHandle(Define.Click, strQuery);
+                                })
+                            });
+                        }
+                        else
+                        {
+                            lstSteps.Add(new ActionData()
+                            {
+                                Control = frm,
+                                Action = new Action<ChromiumWebBrowser>((_browser) =>
+                                {
+                                    _browser.InitMouseHandle();
+                                    var result = _browser.SendMouseHandle(strHandle, strQuery);
+                                })
+                            });
+                        } 
                     }
                 }
                 else if (ctr is frmInputHandle)
@@ -129,10 +171,14 @@ namespace CefSharpDemo.GUI
                     string strQuery;
                     frm.GetData(out strQuery, out strValue);
 
-                    lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
+                    lstSteps.Add(new ActionData()
                     {
-                        _browser.SendText(strQuery, strValue);
-                    }));
+                        Control = frm,
+                        Action = new Action<ChromiumWebBrowser>((_browser) =>
+                        {
+                            var result = _browser.SendText(strQuery, strValue);
+                        })
+                    });
                 }
             }
 
@@ -217,7 +263,7 @@ namespace CefSharpDemo.GUI
             XmlNodeList xmlSteps = xmlDoc.SelectNodes($"/{Define.Root}/{Define.Step}");
             foreach (XmlNode xmlStep in xmlSteps)
             {
-                string type = string.Empty;     
+                string type = string.Empty;
 
                 if (xmlStep.Attributes[Define.Type] != null)
                     type = xmlStep.Attributes[Define.Type].Value;
@@ -300,7 +346,7 @@ namespace CefSharpDemo.GUI
                             XmlElement xmlStep = xmlDoc.CreateElement(Define.Step);
                             Dictionary<string, string> attrs = new Dictionary<string, string>();
                             attrs.Add(Define.Type, Define.Mouse);
-                            attrs.Add(Define.Handle, strHandle);
+                            attrs.Add(Define.Handle, strHandle.ToLower());
                             attrs.Add(Define.Query, strQuery);
                             attrs.Add(Define.IsPosition, isPosition.ToString());
                             attrs.Add(Define.PositionX, iX.ToString());
@@ -318,7 +364,7 @@ namespace CefSharpDemo.GUI
                             XmlElement xmlStep = xmlDoc.CreateElement(Define.Step);
                             Dictionary<string, string> attrs = new Dictionary<string, string>();
                             attrs.Add(Define.Type, Define.Mouse);
-                            attrs.Add(Define.Handle, strHandle);
+                            attrs.Add(Define.Handle, strHandle.ToLower());
                             attrs.Add(Define.Query, strQuery);
                             attrs.ToList().ForEach(x =>
                             {

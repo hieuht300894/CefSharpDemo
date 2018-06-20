@@ -12,6 +12,7 @@ using CefSharp.WinForms;
 using CefSharpDemo.BLL;
 using CefSharpDemo.General;
 using CefSharpDemo.GUI;
+using CefSharpDemo.Model;
 
 namespace CefSharpDemo
 {
@@ -19,9 +20,9 @@ namespace CefSharpDemo
     {
         //string Url = "www.clker.com/inc/svgedit/svg-editor.html";
         //string Url = "http://localhost/test/";
-        string Url = "http://localhost:2695/";
+        string Url = "http://10.88.16.93:2695/";
         StringBuilder strSource = new StringBuilder();
-        List<Action<ChromiumWebBrowser>> lstSteps = new List<Action<ChromiumWebBrowser>>();
+        List<ActionData> lstSteps = new List<ActionData>();
         /// <summary>
         /// -1: Wait
         /// </summary>
@@ -77,8 +78,7 @@ namespace CefSharpDemo
 
             if (curStep < numStep)
             {
-                Action<ChromiumWebBrowser> action = lstSteps[curStep];
-                action(browser);
+                lstSteps[curStep].Action(browser);
             }
             curStep++;
         }
@@ -113,14 +113,13 @@ namespace CefSharpDemo
 
             if (curStep < numStep)
             {
-                Action<ChromiumWebBrowser> action = lstSteps[curStep];
-                action(browser);
+                lstSteps[curStep].Action(browser);
             }
             curStep++;
         }
 
         public void InitBrowser()
-        {       
+        {
             BrowserSettings browserSettings = new BrowserSettings();
             browserSettings.FileAccessFromFileUrls = CefState.Enabled;
             browserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
@@ -135,7 +134,7 @@ namespace CefSharpDemo
 
             browser.FrameLoadStart -= Browser_FrameLoadStart;
             browser.FrameLoadEnd -= Browser_FrameLoadEnd;
-         
+
             browser.FrameLoadStart += Browser_FrameLoadStart;
             browser.FrameLoadEnd += Browser_FrameLoadEnd;
 
@@ -194,7 +193,7 @@ namespace CefSharpDemo
         {
             ChromiumWebBrowser browser = tpBrowser.Controls["ChromiumWebBrowser"] as ChromiumWebBrowser;
             frmInsertData frm = new frmInsertData();
-            frm.ResendData = new frmInsertData.SendData(new Action<List<Action<ChromiumWebBrowser>>>((_lstSteps) =>
+            frm.ResendData = new frmInsertData.SendData(new Action<List<ActionData>>((_lstSteps) =>
             {
                 curStep = 0;
                 numStep = _lstSteps.Count;
