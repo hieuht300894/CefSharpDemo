@@ -21,6 +21,7 @@ namespace CefSharpDemo.GUI
         public delegate void SendData(List<ActionData> lstSteps);
         public SendData ResendData;
         int id = 0;
+        string fileName = string.Empty;
 
         public frmInsertData()
         {
@@ -29,7 +30,7 @@ namespace CefSharpDemo.GUI
 
         protected override void FrmBase_Load(object sender, EventArgs e)
         {
-            LoadData();
+            LoadData(string.Empty);
             InitEvent();
         }
         protected override void FrmBase_FormClosing(object sender, FormClosingEventArgs e)
@@ -95,6 +96,7 @@ namespace CefSharpDemo.GUI
                 Action = new Action<ChromiumWebBrowser>((_browser) => { })
             });
 
+            int prevIndex = 0;
             foreach (Control ctr in fpBody.Controls)
             {
                 if (ctr is frmMouseHandle)
@@ -119,7 +121,8 @@ namespace CefSharpDemo.GUI
                                     _browser.InitMouseHandlePoint();
                                     var result1 = _browser.SendMouseHandle(Define.Click, iX, iY);
                                     var result2 = _browser.SendMouseHandle(Define.Click, iX, iY);
-                                })
+                                }),
+                                NextAction = lstSteps[prevIndex].Action
                             });
                         }
                         else
@@ -131,9 +134,10 @@ namespace CefSharpDemo.GUI
                                 {
                                     _browser.InitMouseHandlePoint();
                                     var result = _browser.SendMouseHandle(strHandle, iX, iY);
-                                })
+                                }),
+                                NextAction = lstSteps[prevIndex].Action
                             });
-                        }        
+                        }
                     }
                     else
                     {
@@ -147,7 +151,8 @@ namespace CefSharpDemo.GUI
                                     _browser.InitMouseHandle();
                                     var result1 = _browser.SendMouseHandle(Define.Click, strQuery);
                                     var result2 = _browser.SendMouseHandle(Define.Click, strQuery);
-                                })
+                                }),
+                                NextAction = lstSteps[prevIndex].Action
                             });
                         }
                         else
@@ -159,9 +164,10 @@ namespace CefSharpDemo.GUI
                                 {
                                     _browser.InitMouseHandle();
                                     var result = _browser.SendMouseHandle(strHandle, strQuery);
-                                })
+                                }),
+                                NextAction = lstSteps[prevIndex].Action
                             });
-                        } 
+                        }
                     }
                 }
                 else if (ctr is frmInputHandle)
@@ -177,7 +183,8 @@ namespace CefSharpDemo.GUI
                         Action = new Action<ChromiumWebBrowser>((_browser) =>
                         {
                             var result = _browser.SendText(strQuery, strValue);
-                        })
+                        }),
+                        NextAction = lstSteps[prevIndex].Action
                     });
                 }
             }
@@ -207,7 +214,7 @@ namespace CefSharpDemo.GUI
         private void BtnLoad_Click(object sender, EventArgs e)
         {
             if (fpBody.Controls.Count > 0 && this.showConfirm(Caption: "Data is edited. Do you save it?"))
-                SaveData();
+                SaveData(fileName);
             LoadFile();
         }
         private void BtnSave_Click(object sender, EventArgs e)
@@ -241,17 +248,26 @@ namespace CefSharpDemo.GUI
         }
         void SaveFile()
         {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Filter = ".xml|*.xml";
-            dialog.FileName = $"{DateTime.Now.ToString("yyyyMMdd-hhmmss")}";
-            if (dialog.ShowDialog() == DialogResult.OK)
+            if (string.IsNullOrWhiteSpace(fileName))
             {
-                SaveData(dialog.FileName);
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.Filter = ".xml|*.xml";
+                dialog.FileName = $"{DateTime.Now.ToString("yyyyMMdd-hhmmss")}";
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    SaveData(dialog.FileName);
+                }
             }
+            else
+            {
+                SaveData(fileName);
+            }
+
         }
-        void LoadData(string fileName = "")
+        void LoadData(string fileName)
         {
             id = 0;
+            this.fileName = fileName;
             fpBody.Controls.Clear();
 
             if (!System.IO.File.Exists(fileName))
@@ -315,12 +331,13 @@ namespace CefSharpDemo.GUI
                 }
             }
         }
-        void SaveData(string fileName = "")
+        void SaveData(string fileName)
         {
             try
             {
                 XmlDocument xmlDoc = new XmlDocument();
 
+                this.fileName = fileName;
                 if (System.IO.File.Exists(fileName))
                     xmlDoc.Load(fileName);
                 else

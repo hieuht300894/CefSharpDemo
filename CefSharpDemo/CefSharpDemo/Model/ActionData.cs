@@ -12,5 +12,6 @@ namespace CefSharpDemo.Model
     {
         public Control Control { get; set; }
         public Action<ChromiumWebBrowser> Action { get; set; }
+        public Action<ChromiumWebBrowser> NextAction { get; set; }
     }
 }

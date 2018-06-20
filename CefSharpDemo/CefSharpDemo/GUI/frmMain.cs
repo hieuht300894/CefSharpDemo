@@ -23,11 +23,9 @@ namespace CefSharpDemo
         string Url = "http://10.88.16.93:2695/";
         StringBuilder strSource = new StringBuilder();
         List<ActionData> lstSteps = new List<ActionData>();
-        /// <summary>
-        /// -1: Wait
-        /// </summary>
         int curStep = 0;
         int numStep = 0;
+        Task task;
 
         public frmMain()
         {
@@ -117,6 +115,29 @@ namespace CefSharpDemo
             }
             curStep++;
         }
+        private void BtnInsertData_Click(object sender, EventArgs e)
+        {
+            ChromiumWebBrowser browser = tpBrowser.Controls["ChromiumWebBrowser"] as ChromiumWebBrowser;
+            frmInsertData frm = new frmInsertData();
+            frm.ResendData = new frmInsertData.SendData(new Action<List<ActionData>>((_lstSteps) =>
+            {
+                curStep = 0;
+                numStep = _lstSteps.Count;
+                lstSteps = _lstSteps;
+
+                //int prevIndex = 0;
+                //task = new Task(() => { });         
+                //List<Task> lstTasks = new List<Task>();
+                //lstTasks.Add(task);
+                //lstSteps.ForEach(x =>
+                //{
+                //    lstTasks[prevIndex].ContinueWith((_task) => x.Action);
+                //    prevIndex++;
+                //});
+                InitBrowser();
+            }));
+            frm.Show();
+        }
 
         public void InitBrowser()
         {
@@ -187,20 +208,6 @@ namespace CefSharpDemo
 
             //curStep = 0;
             //numStep = lstSteps.Count;
-        }
-
-        private void BtnInsertData_Click(object sender, EventArgs e)
-        {
-            ChromiumWebBrowser browser = tpBrowser.Controls["ChromiumWebBrowser"] as ChromiumWebBrowser;
-            frmInsertData frm = new frmInsertData();
-            frm.ResendData = new frmInsertData.SendData(new Action<List<ActionData>>((_lstSteps) =>
-            {
-                curStep = 0;
-                numStep = _lstSteps.Count;
-                lstSteps = _lstSteps;
-                InitBrowser();
-            }));
-            frm.Show();
         }
     }
 }
