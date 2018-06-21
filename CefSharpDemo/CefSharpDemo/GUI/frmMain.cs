@@ -36,8 +36,6 @@ namespace CefSharpDemo
             CefSettings cefSettings = new CefSettings();
             Cef.Initialize(cefSettings);
 
-            InitBrowser();
-
             btnClick.Click -= BtnClick_Click;
             btnGetHTML.Click -= BtnGetHTML_Click;
             btnDevTools.Click -= BtnDevTools_Click;
@@ -85,7 +83,10 @@ namespace CefSharpDemo
         {
             if (curStep < numStep)
             {
-                lstSteps[curStep].Actions.ForEach(x => x(browser));
+                lstSteps[curStep].Actions.ForEach(x =>
+                {
+                    x(browser);
+                });
             }
             curStep++;
         }
