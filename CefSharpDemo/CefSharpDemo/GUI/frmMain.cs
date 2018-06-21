@@ -72,17 +72,20 @@ namespace CefSharpDemo
         {
             strSource.Append(await browser.GetSourceAsync());
 
-            //if (curStep < numStep)
-            //{
-            //    lstSteps[curStep].Action(browser);
-            //}
-            //curStep++;
+            if (curStep < numStep)
+            {
+                lstSteps[curStep].Actions.ForEach(x =>
+               {
+                   x(browser);
+               });
+            }
+            curStep++;
         }
         private void BtnClick_Click(object sender, EventArgs e)
         {
             if (curStep < numStep)
             {
-                lstSteps[curStep].Action(browser);
+                lstSteps[curStep].Actions.ForEach(x => x(browser));
             }
             curStep++;
         }

@@ -93,7 +93,7 @@
             this.btnInput.Location = new System.Drawing.Point(109, 3);
             this.btnInput.Name = "btnInput";
             this.btnInput.Size = new System.Drawing.Size(100, 25);
-            this.btnInput.TabIndex = 0;
+            this.btnInput.TabIndex = 1;
             this.btnInput.Text = "Input";
             this.btnInput.UseVisualStyleBackColor = true;
             // 
@@ -111,7 +111,7 @@
             this.btnGroup.Location = new System.Drawing.Point(215, 3);
             this.btnGroup.Name = "btnGroup";
             this.btnGroup.Size = new System.Drawing.Size(100, 25);
-            this.btnGroup.TabIndex = 1;
+            this.btnGroup.TabIndex = 2;
             this.btnGroup.Text = "Group";
             this.btnGroup.UseVisualStyleBackColor = true;
             // 
@@ -138,7 +138,7 @@
             this.btnLoad.Location = new System.Drawing.Point(563, 3);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(100, 25);
-            this.btnLoad.TabIndex = 2;
+            this.btnLoad.TabIndex = 3;
             this.btnLoad.Text = "Load";
             this.btnLoad.UseVisualStyleBackColor = true;
             // 
@@ -147,7 +147,7 @@
             this.btnDone.Location = new System.Drawing.Point(775, 3);
             this.btnDone.Name = "btnDone";
             this.btnDone.Size = new System.Drawing.Size(100, 25);
-            this.btnDone.TabIndex = 1;
+            this.btnDone.TabIndex = 5;
             this.btnDone.Text = "Done";
             this.btnDone.UseVisualStyleBackColor = true;
             // 
@@ -156,7 +156,7 @@
             this.btnSave.Location = new System.Drawing.Point(669, 3);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(100, 25);
-            this.btnSave.TabIndex = 3;
+            this.btnSave.TabIndex = 4;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             // 

@@ -49,15 +49,16 @@
             this.tpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 261F));
             this.tpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 261F));
             this.tpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 261F));
-            this.tpMain.Size = new System.Drawing.Size(284, 261);
+            this.tpMain.Size = new System.Drawing.Size(354, 261);
             this.tpMain.TabIndex = 0;
             // 
             // fpMain
             // 
+            this.fpMain.AutoScroll = true;
             this.fpMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fpMain.Location = new System.Drawing.Point(3, 3);
             this.fpMain.Name = "fpMain";
-            this.fpMain.Size = new System.Drawing.Size(278, 255);
+            this.fpMain.Size = new System.Drawing.Size(348, 255);
             this.fpMain.TabIndex = 0;
             // 
             // frmGroupHandle
@@ -65,12 +66,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(354, 261);
             this.Controls.Add(this.tpMain);
             this.Name = "frmGroupHandle";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.tpMain.ResumeLayout(false);
             this.ResumeLayout(false);
 

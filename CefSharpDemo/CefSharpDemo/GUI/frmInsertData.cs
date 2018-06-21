@@ -47,144 +47,87 @@ namespace CefSharpDemo.GUI
 
         private void BtnDone_Click(object sender, EventArgs e)
         {
-            #region Code 1
-            //DialogResult = DialogResult.OK;
-
-            //List<Action<ChromiumWebBrowser>> lstSteps = new List<Action<ChromiumWebBrowser>>();
-            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            //{
-            //}));
-            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            //{
-            //    _browser.InitMouseHandle();
-            //    _browser.SendTextById("email-input-login", "hieu");
-            //    _browser.SendTextById("passw-input-login", "1");
-            //    _browser.SendMouseHandleById(Define.MOUSE_HANDLE.click, "btnLogin");
-            //}));
-            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            //{
-            //    _browser.InitMouseHandle();
-            //    _browser.SendMouseHandleByClassName(Define.MOUSE_HANDLE.click, "option-site");
-            //}));
-            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            //{
-            //    _browser.InitMouseHandle();
-            //    _browser.SendMouseHandle(Define.MOUSE_HANDLE.click, "li[id=a3846f09-54c6-47ba-b64f-415e243f322a] img");
-            //}));
-            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            //{
-            //    _browser.InitMouseHandle();
-            //    _browser.SendMouseHandleById(Define.MOUSE_HANDLE.mousemove, "new_obj_control");
-            //    _browser.SendMouseHandleById(Define.MOUSE_HANDLE.mouseover, "new_obj_control");
-            //    _browser.SendMouseHandleById(Define.MOUSE_HANDLE.click, "create_new_obj_addressbox");
-            //}));
-            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            //{
-            //    _browser.InitMouseHandlePoint();
-            //    _browser.SendMouseHandle(Define.MOUSE_HANDLE.mousedown, 300, 300);
-            //    _browser.SendMouseHandle(Define.MOUSE_HANDLE.mousemove, 600, 600);
-            //    _browser.SendMouseHandle(Define.MOUSE_HANDLE.mouseup, 600, 600);
-            //}));
-            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            //{
-            //    _browser.InitMouseHandlePoint();
-            //    _browser.SendMouseHandle(Define.MOUSE_HANDLE.click, 450, 450);
-            //    _browser.SendMouseHandle(Define.MOUSE_HANDLE.click, 450, 450);
-            //}));
-            //lstSteps.Add(new Action<ChromiumWebBrowser>((_browser) =>
-            //{
-            //    _browser.InitMouseHandle();
-            //    _browser.SendMouseHandleById(Define.MOUSE_HANDLE.click, "rBtnDirection_horizontal_addressbox");
-            //}));
-            //ResendData?.Invoke(lstSteps);
-            #endregion
-
             List<ActionData> lstSteps = new List<ActionData>();
 
-            foreach (Control ctr in fpBody.Controls)
+            foreach (Control ctrGroup in fpBody.Controls)
             {
-                if (ctr is frmMouseHandle)
+                if (ctrGroup is frmGroupHandle)
                 {
-                    frmMouseHandle frm = ctr as frmMouseHandle;
-                    string strHandle;
-                    string strQuery;
-                    bool isPosition;
-                    int iX;
-                    int iY;
-                    frm.GetData(out strHandle, out strQuery, out isPosition, out iX, out iY);
+                    List<Control> lstControls = ((frmGroupHandle)ctrGroup).GetChildControl();
+                    ActionData action = new ActionData();
+                    action.Actions = new List<Action<ChromiumWebBrowser>>();
 
-                    if (isPosition)
+                    foreach (Control ctrControl in lstControls)
                     {
-                        if (strHandle.Equals(Define.DblClick))
+                        if (!(ctrControl is frmMouseHandle) && !(ctrControl is frmInputHandle)) continue;
+
+                        if (ctrControl is frmMouseHandle)
                         {
-                            lstSteps.Add(new ActionData()
+                            frmMouseHandle frm = ctrControl as frmMouseHandle;
+                            string strHandle;
+                            string strQuery;
+                            bool isPosition;
+                            int iX;
+                            int iY;
+                            frm.GetData(out strHandle, out strQuery, out isPosition, out iX, out iY);
+
+                            if (isPosition)
                             {
-                                Control = frm,
-                                Action = new Action<ChromiumWebBrowser>((_browser) =>
-                               {
-                                   _browser.InitMouseHandlePoint();
-                                   _browser.SendMouseHandle(Define.Click, iX, iY);
-                                   _browser.SendMouseHandle(Define.Click, iX, iY);
-                               }),
-                            });
-                        }
-                        else
-                        {
-                            lstSteps.Add(new ActionData()
-                            {
-                                Control = frm,
-                                Action = new Action<ChromiumWebBrowser>((_browser) =>
+                                if (strHandle.Equals(Define.DblClick))
                                 {
-                                    _browser.InitMouseHandlePoint();
-                                    _browser.SendMouseHandle(strHandle, iX, iY);
-                                }),
-                            });
-                        }
-                    }
-                    else
-                    {
-                        if (strHandle.Equals(Define.DblClick))
-                        {
-                            lstSteps.Add(new ActionData()
+                                    action.Actions.Add(new Action<ChromiumWebBrowser>((_browser) =>
+                                    {
+                                        _browser.InitMouseHandlePoint();
+                                        _browser.SendMouseHandle(Define.Click, iX, iY);
+                                        _browser.SendMouseHandle(Define.Click, iX, iY);
+                                    }));
+                                }
+                                else
+                                {
+                                    action.Actions.Add(new Action<ChromiumWebBrowser>((_browser) =>
+                                    {
+                                        _browser.InitMouseHandlePoint();
+                                        _browser.SendMouseHandle(strHandle, iX, iY);
+                                    }));
+                                }
+                            }
+                            else
                             {
-                                Control = frm,
-                                Action = new Action<ChromiumWebBrowser>((_browser) =>
-                               {
-                                   _browser.InitMouseHandle();
-                                   _browser.SendMouseHandle(Define.Click, strQuery);
-                                   _browser.SendMouseHandle(Define.Click, strQuery);
-                               }),
-                            });
+                                if (strHandle.Equals(Define.DblClick))
+                                {
+                                    action.Actions.Add(new Action<ChromiumWebBrowser>((_browser) =>
+                                    {
+                                        _browser.InitMouseHandle();
+                                        _browser.SendMouseHandle(Define.Click, strQuery);
+                                        _browser.SendMouseHandle(Define.Click, strQuery);
+                                    }));
+                                }
+                                else
+                                {
+                                    action.Actions.Add(new Action<ChromiumWebBrowser>((_browser) =>
+                                    {
+                                        _browser.InitMouseHandle();
+                                        _browser.SendMouseHandle(strHandle, strQuery);
+                                    }));
+                                }
+                            }
                         }
-                        else
+                        else if (ctrControl is frmInputHandle)
                         {
-                            lstSteps.Add(new ActionData()
-                            {
-                                Control = frm,
-                                Action = new Action<ChromiumWebBrowser>((_browser) =>
-                               {
-                                   _browser.InitMouseHandle();
-                                   _browser.SendMouseHandle(strHandle, strQuery);
-                               }),
-                            });
-                        }
-                    }
-                }
-                else if (ctr is frmInputHandle)
-                {
-                    frmInputHandle frm = ctr as frmInputHandle;
-                    string strValue;
-                    string strQuery;
-                    frm.GetData(out strQuery, out strValue);
+                            frmInputHandle frm = ctrControl as frmInputHandle;
+                            string strValue;
+                            string strQuery;
+                            frm.GetData(out strQuery, out strValue);
 
-                    lstSteps.Add(new ActionData()
-                    {
-                        Control = frm,
-                        Action = new Action<ChromiumWebBrowser>((_browser) =>
-                       {
-                           _browser.SendText(strQuery, strValue);
-                       })
-                    });
+                            action.Actions.Add(new Action<ChromiumWebBrowser>((_browser) =>
+                            {
+                                _browser.SendText(strQuery, strValue);
+                            }));
+                        }
+                    }
+
+                    if (action.Actions.Count > 0)
+                        lstSteps.Add(action);
                 }
             }
 
@@ -192,11 +135,11 @@ namespace CefSharpDemo.GUI
         }
         private void BtnInput_Click(object sender, EventArgs e)
         {
-            InsertInputControl();
+            InsertInputControl(new frmInputHandle());
         }
         private void BtnMouse_Click(object sender, EventArgs e)
         {
-            InsertMouseControl();
+            InsertMouseControl(new frmMouseHandle());
         }
         private void BtnLoad_Click(object sender, EventArgs e)
         {
@@ -214,11 +157,11 @@ namespace CefSharpDemo.GUI
         }
         private void CMenuStripItem_Mouse_Click(object sender, EventArgs e)
         {
-            InsertMouseControl();
+            InsertMouseControl(new frmMouseHandle());
         }
         private void CMenuStripItem_Input_Click(object sender, EventArgs e)
         {
-            InsertInputControl();
+            InsertInputControl(new frmInputHandle());
         }
         private void CMenuStripItem_Group_Click(object sender, EventArgs e)
         {
@@ -254,6 +197,7 @@ namespace CefSharpDemo.GUI
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 LoadData(dialog.FileName);
+                btnDone.Select();
             }
         }
         void SaveFile()
@@ -262,17 +206,18 @@ namespace CefSharpDemo.GUI
             {
                 SaveFileDialog dialog = new SaveFileDialog();
                 dialog.Filter = ".xml|*.xml";
-                dialog.FileName = $"{DateTime.Now.ToString("yyyyMMdd-hhmmss")}";
+                dialog.FileName = $"{DateTime.Now.ToString("yyyyMMdd-hhmmss-ttt")}";
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     SaveData(dialog.FileName);
+                    btnDone.Select();
                 }
             }
             else
             {
                 SaveData(fileName);
+                btnDone.Select();
             }
-
         }
         void LoadData(string fileName)
         {
@@ -286,10 +231,10 @@ namespace CefSharpDemo.GUI
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(fileName);
             XmlNode xmlPage = xmlDoc.SelectSingleNode($"/{Define.Page}");
-            XmlNodeList xmlGroups = xmlDoc.SelectNodes($"/{Define.Page}/{Define.Group}");
+            XmlNodeList xmlGroups = xmlPage.SelectNodes($"{Define.Group}");
             foreach (XmlNode xmlGroup in xmlGroups)
             {
-                XmlNodeList xmlControls = xmlDoc.SelectNodes($"/{Define.Page}/{Define.Group}/{Define.Control}");
+                XmlNodeList xmlControls = xmlGroup.SelectNodes($"{Define.Control}");
                 InsertGroupControl();
 
                 foreach (XmlNode xmlControl in xmlControls)
@@ -309,13 +254,7 @@ namespace CefSharpDemo.GUI
                         if (xmlControl.Attributes[Define.Value] != null)
                             value = xmlControl.Attributes[Define.Value].Value;
 
-                        frmInputHandle frm = new frmInputHandle(query, value);
-                        frm.Name = $"{id}";
-                        frm.Text = $"Input {id}";
-                        frm.Show();
-
-                        frmGroup.Controls.Add(frm);
-                        id++;
+                        InsertInputControl(new frmInputHandle(query, value));
                     }
                     else if (type.ToLower().Equals(Define.Mouse.ToLower()))
                     {
@@ -336,13 +275,7 @@ namespace CefSharpDemo.GUI
                         if (xmlControl.Attributes[Define.PositionY] != null)
                             int.TryParse(xmlControl.Attributes[Define.PositionY].Value, out posY);
 
-                        frmMouseHandle frm = new frmMouseHandle(handle, query, isPosition, posX, posY);
-                        frm.Name = $"{id}";
-                        frm.Text = $"Mouse {id}";
-                        frm.Show();
-
-                        frmGroup.Controls.Add(frm);
-                        id++;
+                        InsertMouseControl(new frmMouseHandle(handle, query, isPosition, posX, posY));
                     }
                 }
             }
@@ -362,18 +295,19 @@ namespace CefSharpDemo.GUI
                 XmlNode xmlPage = xmlDoc.SelectSingleNode($"/{Define.Page}");
                 xmlPage.RemoveAll();
 
-                foreach (Control ctr in fpBody.Controls)
+                foreach (Control ctrGroup in fpBody.Controls)
                 {
                     #region Group
-                    if (ctr is frmGroupHandle)
+                    if (ctrGroup is frmGroupHandle)
                     {
                         XmlElement xmlGroup = xmlDoc.CreateElement(Define.Group);
+                        List<Control> lstControls = ((frmGroupHandle)ctrGroup).GetChildControl();
 
-                        foreach (Control ctrGroup in ctr.Controls)
+                        foreach (Control ctrControl in lstControls)
                         {
-                            if (ctrGroup is frmMouseHandle)
+                            if (ctrControl is frmMouseHandle)
                             {
-                                frmMouseHandle frm = ctrGroup as frmMouseHandle;
+                                frmMouseHandle frm = ctrControl as frmMouseHandle;
                                 string strHandle;
                                 string strQuery;
                                 bool isPosition;
@@ -415,9 +349,9 @@ namespace CefSharpDemo.GUI
                                     xmlGroup.AppendChild(xmlControl);
                                 }
                             }
-                            else if (ctrGroup is frmInputHandle)
+                            else if (ctrControl is frmInputHandle)
                             {
-                                frmInputHandle frm = ctrGroup as frmInputHandle;
+                                frmInputHandle frm = ctrControl as frmInputHandle;
                                 string strValue;
                                 string strQuery;
                                 frm.GetData(out strQuery, out strValue);
@@ -449,12 +383,11 @@ namespace CefSharpDemo.GUI
                 this.showError(Caption: ex.Message);
             }
         }
-        void InsertMouseControl()
+        void InsertMouseControl(frmMouseHandle frm)
         {
             if (frmGroup == null || fpBody.Controls[frmGroup.Name] == null)
                 InsertGroupControl();
 
-            frmMouseHandle frm = new frmMouseHandle();
             frm.Name = $"{id}";
             frm.Text = $"Mouse {id}";
             frm.ContextMenuStrip = cMenuStripGroup;
@@ -463,12 +396,11 @@ namespace CefSharpDemo.GUI
             frmGroup.InsertControl(frm);
             id++;
         }
-        void InsertInputControl()
+        void InsertInputControl(frmInputHandle frm)
         {
             if (frmGroup == null || fpBody.Controls[frmGroup.Name] == null)
                 InsertGroupControl();
 
-            frmInputHandle frm = new frmInputHandle();
             frm.Name = $"{id}";
             frm.Text = $"Input {id}";
             frm.ContextMenuStrip = cMenuStripGroup;
