@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tpMain = new System.Windows.Forms.TableLayoutPanel();
             this.tpHeader = new System.Windows.Forms.TableLayoutPanel();
             this.btnInput = new System.Windows.Forms.Button();
@@ -38,9 +39,18 @@
             this.btnDone = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.fpBody = new System.Windows.Forms.FlowLayoutPanel();
+            this.cMenuStripAdd = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cMenuStripItem_Mouse = new System.Windows.Forms.ToolStripMenuItem();
+            this.cMenuStripItem_Input = new System.Windows.Forms.ToolStripMenuItem();
+            this.cMenuStripGroup = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cMenuStripItem_Group = new System.Windows.Forms.ToolStripMenuItem();
+            this.cMenu_cbb_Group = new System.Windows.Forms.ToolStripComboBox();
+            this.cMenuStripItem_Ungroup = new System.Windows.Forms.ToolStripMenuItem();
             this.tpMain.SuspendLayout();
             this.tpHeader.SuspendLayout();
             this.tpFooter.SuspendLayout();
+            this.cMenuStripAdd.SuspendLayout();
+            this.cMenuStripGroup.SuspendLayout();
             this.SuspendLayout();
             // 
             // tpMain
@@ -153,11 +163,60 @@
             // fpBody
             // 
             this.fpBody.AutoScroll = true;
+            this.fpBody.ContextMenuStrip = this.cMenuStripAdd;
             this.fpBody.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fpBody.Location = new System.Drawing.Point(3, 40);
             this.fpBody.Name = "fpBody";
             this.fpBody.Size = new System.Drawing.Size(878, 331);
             this.fpBody.TabIndex = 3;
+            // 
+            // cMenuStripAdd
+            // 
+            this.cMenuStripAdd.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cMenuStripItem_Mouse,
+            this.cMenuStripItem_Input});
+            this.cMenuStripAdd.Name = "cMenuStrip";
+            this.cMenuStripAdd.Size = new System.Drawing.Size(111, 48);
+            // 
+            // cMenuStripItem_Mouse
+            // 
+            this.cMenuStripItem_Mouse.Name = "cMenuStripItem_Mouse";
+            this.cMenuStripItem_Mouse.Size = new System.Drawing.Size(110, 22);
+            this.cMenuStripItem_Mouse.Text = "Mouse";
+            // 
+            // cMenuStripItem_Input
+            // 
+            this.cMenuStripItem_Input.Name = "cMenuStripItem_Input";
+            this.cMenuStripItem_Input.Size = new System.Drawing.Size(110, 22);
+            this.cMenuStripItem_Input.Text = "Input";
+            // 
+            // cMenuStripGroup
+            // 
+            this.cMenuStripGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cMenuStripItem_Group,
+            this.cMenuStripItem_Ungroup});
+            this.cMenuStripGroup.Name = "cMenuStripGroup";
+            this.cMenuStripGroup.Size = new System.Drawing.Size(122, 48);
+            // 
+            // cMenuStripItem_Group
+            // 
+            this.cMenuStripItem_Group.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cMenu_cbb_Group});
+            this.cMenuStripItem_Group.Name = "cMenuStripItem_Group";
+            this.cMenuStripItem_Group.Size = new System.Drawing.Size(121, 22);
+            this.cMenuStripItem_Group.Text = "Group";
+            // 
+            // cMenu_cbb_Group
+            // 
+            this.cMenu_cbb_Group.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cMenu_cbb_Group.Name = "cMenu_cbb_Group";
+            this.cMenu_cbb_Group.Size = new System.Drawing.Size(121, 23);
+            // 
+            // cMenuStripItem_Ungroup
+            // 
+            this.cMenuStripItem_Ungroup.Name = "cMenuStripItem_Ungroup";
+            this.cMenuStripItem_Ungroup.Size = new System.Drawing.Size(121, 22);
+            this.cMenuStripItem_Ungroup.Text = "Ungroup";
             // 
             // frmInsertData
             // 
@@ -170,6 +229,8 @@
             this.tpMain.ResumeLayout(false);
             this.tpHeader.ResumeLayout(false);
             this.tpFooter.ResumeLayout(false);
+            this.cMenuStripAdd.ResumeLayout(false);
+            this.cMenuStripGroup.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -186,5 +247,12 @@
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnGroup;
+        private System.Windows.Forms.ContextMenuStrip cMenuStripAdd;
+        private System.Windows.Forms.ToolStripMenuItem cMenuStripItem_Mouse;
+        private System.Windows.Forms.ToolStripMenuItem cMenuStripItem_Input;
+        private System.Windows.Forms.ContextMenuStrip cMenuStripGroup;
+        private System.Windows.Forms.ToolStripMenuItem cMenuStripItem_Group;
+        private System.Windows.Forms.ToolStripComboBox cMenu_cbb_Group;
+        private System.Windows.Forms.ToolStripMenuItem cMenuStripItem_Ungroup;
     }
 }

@@ -20,12 +20,20 @@ namespace CefSharpDemo.GUI
     {
         public delegate void SendData(List<ActionData> lstSteps);
         public SendData ResendData;
+
+        frmGroupHandle frmGroup;
+        ChromiumWebBrowser Browser;
         int id = 0;
         string fileName = string.Empty;
 
         public frmInsertData()
         {
             InitializeComponent();
+        }
+        public frmInsertData(ChromiumWebBrowser Browser)
+        {
+            InitializeComponent();
+            this.Browser = Browser;
         }
 
         protected override void FrmBase_Load(object sender, EventArgs e)
@@ -39,6 +47,7 @@ namespace CefSharpDemo.GUI
 
         private void BtnDone_Click(object sender, EventArgs e)
         {
+            #region Code 1
             //DialogResult = DialogResult.OK;
 
             //List<Action<ChromiumWebBrowser>> lstSteps = new List<Action<ChromiumWebBrowser>>();
@@ -88,15 +97,10 @@ namespace CefSharpDemo.GUI
             //    _browser.SendMouseHandleById(Define.MOUSE_HANDLE.click, "rBtnDirection_horizontal_addressbox");
             //}));
             //ResendData?.Invoke(lstSteps);
+            #endregion
 
-            //DialogResult = DialogResult.OK;
             List<ActionData> lstSteps = new List<ActionData>();
-            lstSteps.Add(new ActionData()
-            {
-                Action = new Action<ChromiumWebBrowser>((_browser) => { })
-            });
 
-            int prevIndex = 0;
             foreach (Control ctr in fpBody.Controls)
             {
                 if (ctr is frmMouseHandle)
@@ -117,12 +121,11 @@ namespace CefSharpDemo.GUI
                             {
                                 Control = frm,
                                 Action = new Action<ChromiumWebBrowser>((_browser) =>
-                                {
-                                    _browser.InitMouseHandlePoint();
-                                    var result1 = _browser.SendMouseHandle(Define.Click, iX, iY);
-                                    var result2 = _browser.SendMouseHandle(Define.Click, iX, iY);
-                                }),
-                                NextAction = lstSteps[prevIndex].Action
+                               {
+                                   _browser.InitMouseHandlePoint();
+                                   _browser.SendMouseHandle(Define.Click, iX, iY);
+                                   _browser.SendMouseHandle(Define.Click, iX, iY);
+                               }),
                             });
                         }
                         else
@@ -133,9 +136,8 @@ namespace CefSharpDemo.GUI
                                 Action = new Action<ChromiumWebBrowser>((_browser) =>
                                 {
                                     _browser.InitMouseHandlePoint();
-                                    var result = _browser.SendMouseHandle(strHandle, iX, iY);
+                                    _browser.SendMouseHandle(strHandle, iX, iY);
                                 }),
-                                NextAction = lstSteps[prevIndex].Action
                             });
                         }
                     }
@@ -147,12 +149,11 @@ namespace CefSharpDemo.GUI
                             {
                                 Control = frm,
                                 Action = new Action<ChromiumWebBrowser>((_browser) =>
-                                {
-                                    _browser.InitMouseHandle();
-                                    var result1 = _browser.SendMouseHandle(Define.Click, strQuery);
-                                    var result2 = _browser.SendMouseHandle(Define.Click, strQuery);
-                                }),
-                                NextAction = lstSteps[prevIndex].Action
+                               {
+                                   _browser.InitMouseHandle();
+                                   _browser.SendMouseHandle(Define.Click, strQuery);
+                                   _browser.SendMouseHandle(Define.Click, strQuery);
+                               }),
                             });
                         }
                         else
@@ -161,11 +162,10 @@ namespace CefSharpDemo.GUI
                             {
                                 Control = frm,
                                 Action = new Action<ChromiumWebBrowser>((_browser) =>
-                                {
-                                    _browser.InitMouseHandle();
-                                    var result = _browser.SendMouseHandle(strHandle, strQuery);
-                                }),
-                                NextAction = lstSteps[prevIndex].Action
+                               {
+                                   _browser.InitMouseHandle();
+                                   _browser.SendMouseHandle(strHandle, strQuery);
+                               }),
                             });
                         }
                     }
@@ -181,10 +181,9 @@ namespace CefSharpDemo.GUI
                     {
                         Control = frm,
                         Action = new Action<ChromiumWebBrowser>((_browser) =>
-                        {
-                            var result = _browser.SendText(strQuery, strValue);
-                        }),
-                        NextAction = lstSteps[prevIndex].Action
+                       {
+                           _browser.SendText(strQuery, strValue);
+                       })
                     });
                 }
             }
@@ -193,23 +192,11 @@ namespace CefSharpDemo.GUI
         }
         private void BtnInput_Click(object sender, EventArgs e)
         {
-            frmInputHandle frm = new frmInputHandle();
-            frm.Name = $"{id}";
-            frm.Text = $"Input {id}";
-            frm.Show();
-
-            fpBody.Controls.Add(frm);
-            id++;
+            InsertInputControl();
         }
         private void BtnMouse_Click(object sender, EventArgs e)
         {
-            frmMouseHandle frm = new frmMouseHandle();
-            frm.Name = $"{id}";
-            frm.Text = $"Mouse {id}";
-            frm.Show();
-
-            fpBody.Controls.Add(frm);
-            id++;
+            InsertMouseControl();
         }
         private void BtnLoad_Click(object sender, EventArgs e)
         {
@@ -223,11 +210,19 @@ namespace CefSharpDemo.GUI
         }
         private void BtnGroup_Click(object sender, EventArgs e)
         {
-            GroupBox groupBox = new GroupBox();
-            groupBox.Size = new Size(300, 300);
-            groupBox.Show();
-
-            fpBody.Controls.Add(groupBox);
+            InsertGroupControl();
+        }
+        private void CMenuStripItem_Mouse_Click(object sender, EventArgs e)
+        {
+            InsertMouseControl();
+        }
+        private void CMenuStripItem_Input_Click(object sender, EventArgs e)
+        {
+            InsertInputControl();
+        }
+        private void CMenuStripItem_Group_Click(object sender, EventArgs e)
+        {
+            GroupControl();
         }
 
         void InitEvent()
@@ -238,6 +233,9 @@ namespace CefSharpDemo.GUI
             btnLoad.Click -= BtnLoad_Click;
             btnSave.Click -= BtnSave_Click;
             btnGroup.Click -= BtnGroup_Click;
+            cMenuStripItem_Group.Click -= CMenuStripItem_Group_Click;
+            cMenuStripItem_Input.Click -= CMenuStripItem_Input_Click;
+            cMenuStripItem_Mouse.Click -= CMenuStripItem_Mouse_Click;
 
             btnMouse.Click += BtnMouse_Click;
             btnInput.Click += BtnInput_Click;
@@ -245,6 +243,9 @@ namespace CefSharpDemo.GUI
             btnLoad.Click += BtnLoad_Click;
             btnSave.Click += BtnSave_Click;
             btnGroup.Click += BtnGroup_Click;
+            cMenuStripItem_Group.Click += CMenuStripItem_Group_Click;
+            cMenuStripItem_Input.Click += CMenuStripItem_Input_Click;
+            cMenuStripItem_Mouse.Click += CMenuStripItem_Mouse_Click;
         }
         void LoadFile()
         {
@@ -284,59 +285,65 @@ namespace CefSharpDemo.GUI
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(fileName);
-            XmlNode xmlRoot = xmlDoc.SelectSingleNode($"/{Define.Root}");
-            XmlNodeList xmlSteps = xmlDoc.SelectNodes($"/{Define.Root}/{Define.Step}");
-            foreach (XmlNode xmlStep in xmlSteps)
+            XmlNode xmlPage = xmlDoc.SelectSingleNode($"/{Define.Page}");
+            XmlNodeList xmlGroups = xmlDoc.SelectNodes($"/{Define.Page}/{Define.Group}");
+            foreach (XmlNode xmlGroup in xmlGroups)
             {
-                string type = string.Empty;
+                XmlNodeList xmlControls = xmlDoc.SelectNodes($"/{Define.Page}/{Define.Group}/{Define.Control}");
+                InsertGroupControl();
 
-                if (xmlStep.Attributes[Define.Type] != null)
-                    type = xmlStep.Attributes[Define.Type].Value;
-
-                if (type.ToLower().Equals(Define.Input.ToLower()))
+                foreach (XmlNode xmlControl in xmlControls)
                 {
-                    string query = string.Empty;
-                    string value = string.Empty;
+                    string type = string.Empty;
 
-                    if (xmlStep.Attributes[Define.Query] != null)
-                        query = xmlStep.Attributes[Define.Query].Value;
-                    if (xmlStep.Attributes[Define.Value] != null)
-                        value = xmlStep.Attributes[Define.Value].Value;
+                    if (xmlControl.Attributes[Define.Type] != null)
+                        type = xmlControl.Attributes[Define.Type].Value;
 
-                    frmInputHandle frm = new frmInputHandle(query, value);
-                    frm.Name = $"{id}";
-                    frm.Text = $"Input {id}";
-                    frm.Show();
+                    if (type.ToLower().Equals(Define.Input.ToLower()))
+                    {
+                        string query = string.Empty;
+                        string value = string.Empty;
 
-                    fpBody.Controls.Add(frm);
-                    id++;
-                }
-                else if (type.ToLower().Equals(Define.Mouse.ToLower()))
-                {
-                    string handle = string.Empty;
-                    string query = string.Empty;
-                    bool isPosition = false;
-                    int posX = 0;
-                    int posY = 0;
+                        if (xmlControl.Attributes[Define.Query] != null)
+                            query = xmlControl.Attributes[Define.Query].Value;
+                        if (xmlControl.Attributes[Define.Value] != null)
+                            value = xmlControl.Attributes[Define.Value].Value;
 
-                    if (xmlStep.Attributes[Define.Handle] != null)
-                        handle = xmlStep.Attributes[Define.Handle].Value;
-                    if (xmlStep.Attributes[Define.Query] != null)
-                        query = xmlStep.Attributes[Define.Query].Value;
-                    if (xmlStep.Attributes[Define.IsPosition] != null)
-                        bool.TryParse(xmlStep.Attributes[Define.IsPosition].Value, out isPosition);
-                    if (xmlStep.Attributes[Define.PositionX] != null)
-                        int.TryParse(xmlStep.Attributes[Define.PositionX].Value, out posX);
-                    if (xmlStep.Attributes[Define.PositionY] != null)
-                        int.TryParse(xmlStep.Attributes[Define.PositionY].Value, out posY);
+                        frmInputHandle frm = new frmInputHandle(query, value);
+                        frm.Name = $"{id}";
+                        frm.Text = $"Input {id}";
+                        frm.Show();
 
-                    frmMouseHandle frm = new frmMouseHandle(handle, query, isPosition, posX, posY);
-                    frm.Name = $"{id}";
-                    frm.Text = $"Mouse {id}";
-                    frm.Show();
+                        frmGroup.Controls.Add(frm);
+                        id++;
+                    }
+                    else if (type.ToLower().Equals(Define.Mouse.ToLower()))
+                    {
+                        string handle = string.Empty;
+                        string query = string.Empty;
+                        bool isPosition = false;
+                        int posX = 0;
+                        int posY = 0;
 
-                    fpBody.Controls.Add(frm);
-                    id++;
+                        if (xmlControl.Attributes[Define.Handle] != null)
+                            handle = xmlControl.Attributes[Define.Handle].Value;
+                        if (xmlControl.Attributes[Define.Query] != null)
+                            query = xmlControl.Attributes[Define.Query].Value;
+                        if (xmlControl.Attributes[Define.IsPosition] != null)
+                            bool.TryParse(xmlControl.Attributes[Define.IsPosition].Value, out isPosition);
+                        if (xmlControl.Attributes[Define.PositionX] != null)
+                            int.TryParse(xmlControl.Attributes[Define.PositionX].Value, out posX);
+                        if (xmlControl.Attributes[Define.PositionY] != null)
+                            int.TryParse(xmlControl.Attributes[Define.PositionY].Value, out posY);
+
+                        frmMouseHandle frm = new frmMouseHandle(handle, query, isPosition, posX, posY);
+                        frm.Name = $"{id}";
+                        frm.Text = $"Mouse {id}";
+                        frm.Show();
+
+                        frmGroup.Controls.Add(frm);
+                        id++;
+                    }
                 }
             }
         }
@@ -352,83 +359,137 @@ namespace CefSharpDemo.GUI
                 else
                     xmlDoc.InitDocument();
 
-                XmlNode xmlRoot = xmlDoc.SelectSingleNode($"/{Define.Root}");
-                xmlRoot.RemoveAll();
+                XmlNode xmlPage = xmlDoc.SelectSingleNode($"/{Define.Page}");
+                xmlPage.RemoveAll();
 
                 foreach (Control ctr in fpBody.Controls)
                 {
-                    if (ctr is frmMouseHandle)
+                    #region Group
+                    if (ctr is frmGroupHandle)
                     {
-                        frmMouseHandle frm = ctr as frmMouseHandle;
-                        string strHandle;
-                        string strQuery;
-                        bool isPosition;
-                        int iX;
-                        int iY;
-                        frm.GetData(out strHandle, out strQuery, out isPosition, out iX, out iY);
+                        XmlElement xmlGroup = xmlDoc.CreateElement(Define.Group);
 
-                        if (isPosition)
+                        foreach (Control ctrGroup in ctr.Controls)
                         {
-                            XmlElement xmlStep = xmlDoc.CreateElement(Define.Step);
-                            Dictionary<string, string> attrs = new Dictionary<string, string>();
-                            attrs.Add(Define.Type, Define.Mouse);
-                            attrs.Add(Define.Handle, strHandle.ToLower());
-                            attrs.Add(Define.Query, strQuery);
-                            attrs.Add(Define.IsPosition, isPosition.ToString());
-                            attrs.Add(Define.PositionX, iX.ToString());
-                            attrs.Add(Define.PositionY, iY.ToString());
-                            attrs.ToList().ForEach(x =>
+                            if (ctrGroup is frmMouseHandle)
                             {
-                                XmlAttribute xmlAttr = xmlDoc.CreateAttribute(x.Key);
-                                xmlAttr.Value = x.Value;
-                                xmlStep.Attributes.Append(xmlAttr);
-                            });
-                            xmlRoot.AppendChild(xmlStep);
-                        }
-                        else
-                        {
-                            XmlElement xmlStep = xmlDoc.CreateElement(Define.Step);
-                            Dictionary<string, string> attrs = new Dictionary<string, string>();
-                            attrs.Add(Define.Type, Define.Mouse);
-                            attrs.Add(Define.Handle, strHandle.ToLower());
-                            attrs.Add(Define.Query, strQuery);
-                            attrs.ToList().ForEach(x =>
-                            {
-                                XmlAttribute xmlAttr = xmlDoc.CreateAttribute(x.Key);
-                                xmlAttr.Value = x.Value;
-                                xmlStep.Attributes.Append(xmlAttr);
-                            });
-                            xmlRoot.AppendChild(xmlStep);
-                        }
-                    }
-                    else if (ctr is frmInputHandle)
-                    {
-                        frmInputHandle frm = ctr as frmInputHandle;
-                        string strValue;
-                        string strQuery;
-                        frm.GetData(out strQuery, out strValue);
+                                frmMouseHandle frm = ctrGroup as frmMouseHandle;
+                                string strHandle;
+                                string strQuery;
+                                bool isPosition;
+                                int iX;
+                                int iY;
+                                frm.GetData(out strHandle, out strQuery, out isPosition, out iX, out iY);
 
-                        XmlElement xmlStep = xmlDoc.CreateElement(Define.Step);
-                        Dictionary<string, string> attrs = new Dictionary<string, string>();
-                        attrs.Add(Define.Type, Define.Input);
-                        attrs.Add(Define.Query, strQuery);
-                        attrs.Add(Define.Value, strValue);
-                        attrs.ToList().ForEach(x =>
-                        {
-                            XmlAttribute xmlAttr = xmlDoc.CreateAttribute(x.Key);
-                            xmlAttr.Value = x.Value;
-                            xmlStep.Attributes.Append(xmlAttr);
-                        });
-                        xmlRoot.AppendChild(xmlStep);
+                                if (isPosition)
+                                {
+                                    XmlElement xmlControl = xmlDoc.CreateElement(Define.Control);
+                                    Dictionary<string, string> attrs = new Dictionary<string, string>();
+                                    attrs.Add(Define.Type, Define.Mouse);
+                                    attrs.Add(Define.Handle, strHandle.ToLower());
+                                    attrs.Add(Define.Query, strQuery);
+                                    attrs.Add(Define.IsPosition, isPosition.ToString());
+                                    attrs.Add(Define.PositionX, iX.ToString());
+                                    attrs.Add(Define.PositionY, iY.ToString());
+                                    attrs.ToList().ForEach(x =>
+                                    {
+                                        XmlAttribute xmlAttr = xmlDoc.CreateAttribute(x.Key);
+                                        xmlAttr.Value = x.Value;
+                                        xmlControl.Attributes.Append(xmlAttr);
+                                    });
+                                    xmlGroup.AppendChild(xmlControl);
+                                }
+                                else
+                                {
+                                    XmlElement xmlControl = xmlDoc.CreateElement(Define.Control);
+                                    Dictionary<string, string> attrs = new Dictionary<string, string>();
+                                    attrs.Add(Define.Type, Define.Mouse);
+                                    attrs.Add(Define.Handle, strHandle.ToLower());
+                                    attrs.Add(Define.Query, strQuery);
+                                    attrs.ToList().ForEach(x =>
+                                    {
+                                        XmlAttribute xmlAttr = xmlDoc.CreateAttribute(x.Key);
+                                        xmlAttr.Value = x.Value;
+                                        xmlControl.Attributes.Append(xmlAttr);
+                                    });
+                                    xmlGroup.AppendChild(xmlControl);
+                                }
+                            }
+                            else if (ctrGroup is frmInputHandle)
+                            {
+                                frmInputHandle frm = ctrGroup as frmInputHandle;
+                                string strValue;
+                                string strQuery;
+                                frm.GetData(out strQuery, out strValue);
+
+                                XmlElement xmlControl = xmlDoc.CreateElement(Define.Control);
+                                Dictionary<string, string> attrs = new Dictionary<string, string>();
+                                attrs.Add(Define.Type, Define.Input);
+                                attrs.Add(Define.Query, strQuery);
+                                attrs.Add(Define.Value, strValue);
+                                attrs.ToList().ForEach(x =>
+                                {
+                                    XmlAttribute xmlAttr = xmlDoc.CreateAttribute(x.Key);
+                                    xmlAttr.Value = x.Value;
+                                    xmlControl.Attributes.Append(xmlAttr);
+                                });
+                                xmlGroup.AppendChild(xmlControl);
+                            }
+                        }
+
+                        xmlPage.AppendChild(xmlGroup);
                     }
+                    #endregion   
                 }
 
                 xmlDoc.Save(fileName);
             }
             catch (Exception ex)
             {
-
+                this.showError(Caption: ex.Message);
             }
+        }
+        void InsertMouseControl()
+        {
+            if (frmGroup == null || fpBody.Controls[frmGroup.Name] == null)
+                InsertGroupControl();
+
+            frmMouseHandle frm = new frmMouseHandle();
+            frm.Name = $"{id}";
+            frm.Text = $"Mouse {id}";
+            frm.ContextMenuStrip = cMenuStripGroup;
+            frm.Show();
+
+            frmGroup.InsertControl(frm);
+            id++;
+        }
+        void InsertInputControl()
+        {
+            if (frmGroup == null || fpBody.Controls[frmGroup.Name] == null)
+                InsertGroupControl();
+
+            frmInputHandle frm = new frmInputHandle();
+            frm.Name = $"{id}";
+            frm.Text = $"Input {id}";
+            frm.ContextMenuStrip = cMenuStripGroup;
+            frm.Show();
+
+            frmGroup.InsertControl(frm);
+            id++;
+        }
+        void InsertGroupControl()
+        {
+            frmGroup = new frmGroupHandle();
+            frmGroup.Name = $"{id}";
+            frmGroup.Text = $"Group {id}";
+            frmGroup.Show();
+
+            fpBody.Controls.Add(frmGroup);
+            id++;
+        }
+        void GroupControl()
+        {
+
         }
     }
 }

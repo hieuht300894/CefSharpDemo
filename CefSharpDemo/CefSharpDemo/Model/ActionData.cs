@@ -10,8 +10,8 @@ namespace CefSharpDemo.Model
 {
     public class ActionData
     {
+        public ChromiumWebBrowser Browser { get; set; }
         public Control Control { get; set; }
         public Action<ChromiumWebBrowser> Action { get; set; }
-        public Action<ChromiumWebBrowser> NextAction { get; set; }
     }
 }

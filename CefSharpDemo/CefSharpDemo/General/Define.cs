@@ -15,7 +15,6 @@ namespace CefSharpDemo.General
         public const string MouseMove = "mousemove";
         public const string MouseOut = "mouseout";
         public const string DblClick = "dblclick";
-        public const string Step = "Step";
         public const string Type = "Type";
         public const string Handle = "Handle";
         public const string Query = "Query";
@@ -25,6 +24,8 @@ namespace CefSharpDemo.General
         public const string PositionY = "PositionY";
         public const string Input = "Input";
         public const string Mouse = "Mouse";
-        public const string Root = "Root";
+        public const string Page = "Page";
+        public const string Group = "Group";
+        public const string Control = "Control";
     }
 }

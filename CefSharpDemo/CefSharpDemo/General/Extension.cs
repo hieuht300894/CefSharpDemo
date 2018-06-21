@@ -11,7 +11,7 @@ namespace CefSharpDemo.General
     {
         public static void InitDocument(this XmlDocument xmlDoc)
         {
-            xmlDoc.LoadXml($"<{Define.Root}></{Define.Root}>");
+            xmlDoc.LoadXml($"<{Define.Page}></{Define.Page}>");
 
             XmlDeclaration xmlDec = xmlDoc.CreateXmlDeclaration("1.0", "utf-8", null);
             xmlDoc.InsertBefore(xmlDec, xmlDoc.DocumentElement);
