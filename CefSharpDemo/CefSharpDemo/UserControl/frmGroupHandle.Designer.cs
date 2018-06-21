@@ -28,37 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tpMain = new System.Windows.Forms.TableLayoutPanel();
             this.fpMain = new System.Windows.Forms.FlowLayoutPanel();
-            this.tpMain.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tpMain
-            // 
-            this.tpMain.ColumnCount = 1;
-            this.tpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tpMain.Controls.Add(this.fpMain, 0, 0);
-            this.tpMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tpMain.Location = new System.Drawing.Point(0, 0);
-            this.tpMain.Name = "tpMain";
-            this.tpMain.RowCount = 1;
-            this.tpMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 261F));
-            this.tpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 261F));
-            this.tpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 261F));
-            this.tpMain.Size = new System.Drawing.Size(354, 261);
-            this.tpMain.TabIndex = 0;
             // 
             // fpMain
             // 
             this.fpMain.AutoScroll = true;
             this.fpMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fpMain.Location = new System.Drawing.Point(3, 3);
+            this.fpMain.Location = new System.Drawing.Point(0, 0);
             this.fpMain.Name = "fpMain";
-            this.fpMain.Size = new System.Drawing.Size(348, 255);
+            this.fpMain.Size = new System.Drawing.Size(354, 261);
             this.fpMain.TabIndex = 0;
             // 
             // frmGroupHandle
@@ -67,18 +46,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(354, 261);
-            this.Controls.Add(this.tpMain);
+            this.Controls.Add(this.fpMain);
             this.Name = "frmGroupHandle";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.tpMain.ResumeLayout(false);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TableLayoutPanel tpMain;
         private System.Windows.Forms.FlowLayoutPanel fpMain;
     }
 }

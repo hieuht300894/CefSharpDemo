@@ -155,18 +155,6 @@ namespace CefSharpDemo.GUI
         {
             InsertGroupControl();
         }
-        private void CMenuStripItem_Mouse_Click(object sender, EventArgs e)
-        {
-            InsertMouseControl(new frmMouseHandle());
-        }
-        private void CMenuStripItem_Input_Click(object sender, EventArgs e)
-        {
-            InsertInputControl(new frmInputHandle());
-        }
-        private void CMenuStripItem_Group_Click(object sender, EventArgs e)
-        {
-            GroupControl();
-        }
 
         void InitEvent()
         {
@@ -176,9 +164,6 @@ namespace CefSharpDemo.GUI
             btnLoad.Click -= BtnLoad_Click;
             btnSave.Click -= BtnSave_Click;
             btnGroup.Click -= BtnGroup_Click;
-            cMenuStripItem_Group.Click -= CMenuStripItem_Group_Click;
-            cMenuStripItem_Input.Click -= CMenuStripItem_Input_Click;
-            cMenuStripItem_Mouse.Click -= CMenuStripItem_Mouse_Click;
 
             btnMouse.Click += BtnMouse_Click;
             btnInput.Click += BtnInput_Click;
@@ -186,9 +171,6 @@ namespace CefSharpDemo.GUI
             btnLoad.Click += BtnLoad_Click;
             btnSave.Click += BtnSave_Click;
             btnGroup.Click += BtnGroup_Click;
-            cMenuStripItem_Group.Click += CMenuStripItem_Group_Click;
-            cMenuStripItem_Input.Click += CMenuStripItem_Input_Click;
-            cMenuStripItem_Mouse.Click += CMenuStripItem_Mouse_Click;
         }
         void LoadFile()
         {
@@ -404,7 +386,6 @@ namespace CefSharpDemo.GUI
 
             frm.Name = $"{id}";
             frm.Text = $"Mouse {id}";
-            frm.ContextMenuStrip = cMenuStripGroup;
             frm.Show();
 
             frmGroup.InsertControl(frm);
@@ -417,7 +398,6 @@ namespace CefSharpDemo.GUI
 
             frm.Name = $"{id}";
             frm.Text = $"Input {id}";
-            frm.ContextMenuStrip = cMenuStripGroup;
             frm.Show();
 
             frmGroup.InsertControl(frm);
@@ -428,6 +408,7 @@ namespace CefSharpDemo.GUI
             frmGroup = new frmGroupHandle();
             frmGroup.Name = $"{id}";
             frmGroup.Text = $"Group {id}";
+            frmGroup.ReloadData = new frmGroupHandle.LoadData((_frm) => { frmGroup = _frm; });
             frmGroup.Show();
 
             fpBody.Controls.Add(frmGroup);
