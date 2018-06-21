@@ -46,6 +46,7 @@
             this.cMenuStripItem_Group = new System.Windows.Forms.ToolStripMenuItem();
             this.cMenu_cbb_Group = new System.Windows.Forms.ToolStripComboBox();
             this.cMenuStripItem_Ungroup = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtUrl = new System.Windows.Forms.RichTextBox();
             this.tpMain.SuspendLayout();
             this.tpHeader.SuspendLayout();
             this.tpFooter.SuspendLayout();
@@ -80,6 +81,7 @@
             this.tpHeader.Controls.Add(this.btnInput, 1, 0);
             this.tpHeader.Controls.Add(this.btnMouse, 0, 0);
             this.tpHeader.Controls.Add(this.btnGroup, 2, 0);
+            this.tpHeader.Controls.Add(this.txtUrl, 3, 0);
             this.tpHeader.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tpHeader.Location = new System.Drawing.Point(3, 3);
             this.tpHeader.Name = "tpHeader";
@@ -218,6 +220,15 @@
             this.cMenuStripItem_Ungroup.Size = new System.Drawing.Size(121, 22);
             this.cMenuStripItem_Ungroup.Text = "Ungroup";
             // 
+            // txtUrl
+            // 
+            this.txtUrl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtUrl.Location = new System.Drawing.Point(321, 3);
+            this.txtUrl.Name = "txtUrl";
+            this.txtUrl.Size = new System.Drawing.Size(554, 25);
+            this.txtUrl.TabIndex = 3;
+            this.txtUrl.Text = "";
+            // 
             // frmInsertData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -254,5 +265,6 @@
         private System.Windows.Forms.ToolStripMenuItem cMenuStripItem_Group;
         private System.Windows.Forms.ToolStripComboBox cMenu_cbb_Group;
         private System.Windows.Forms.ToolStripMenuItem cMenuStripItem_Ungroup;
+        private System.Windows.Forms.RichTextBox txtUrl;
     }
 }

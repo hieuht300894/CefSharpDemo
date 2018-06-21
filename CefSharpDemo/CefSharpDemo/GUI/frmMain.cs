@@ -92,19 +92,33 @@ namespace CefSharpDemo
         private void BtnInsertData_Click(object sender, EventArgs e)
         {
             frmInsertData frm = new frmInsertData(browser);
-            frm.ResendData = new frmInsertData.SendData(new Action<List<ActionData>>((_lstSteps) =>
-            {
-                curStep = 0;
-                numStep = _lstSteps.Count;
-                lstSteps = _lstSteps;
+            frm.ResendData = new frmInsertData.SendData(new Action<string, List<ActionData>>((_url, _lstSteps) =>
+           {
+               curStep = 0;
+               numStep = _lstSteps.Count;
+               lstSteps = _lstSteps;
 
-                browser.Reload();
-            }));
+               if (!_url.ToLower().Equals(Url.ToLower()))
+               {
+                   Url = _url;
+                   InitBrowser();
+               }
+               else
+               {
+                   browser.Reload();
+               }
+           }));
             frm.Show();
         }
 
         public void InitBrowser()
         {
+            if (browser != null)
+            {
+                browser.FrameLoadStart -= Browser_FrameLoadStart;
+                browser.FrameLoadEnd -= Browser_FrameLoadEnd;
+            }
+
             BrowserSettings browserSettings = new BrowserSettings();
             browserSettings.FileAccessFromFileUrls = CefState.Enabled;
             browserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
@@ -116,9 +130,6 @@ namespace CefSharpDemo
 
             tpBrowser.Controls.Clear();
             tpBrowser.Controls.Add(browser);
-
-            browser.FrameLoadStart -= Browser_FrameLoadStart;
-            browser.FrameLoadEnd -= Browser_FrameLoadEnd;
 
             browser.FrameLoadStart += Browser_FrameLoadStart;
             browser.FrameLoadEnd += Browser_FrameLoadEnd;

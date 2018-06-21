@@ -27,5 +27,6 @@ namespace CefSharpDemo.General
         public const string Page = "Page";
         public const string Group = "Group";
         public const string Control = "Control";
+        public const string Url = "Url";
     }
 }

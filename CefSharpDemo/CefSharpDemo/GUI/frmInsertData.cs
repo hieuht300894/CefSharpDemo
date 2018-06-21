@@ -18,7 +18,7 @@ namespace CefSharpDemo.GUI
 {
     public partial class frmInsertData : frmBase
     {
-        public delegate void SendData(List<ActionData> lstSteps);
+        public delegate void SendData(string Url, List<ActionData> lstSteps);
         public SendData ResendData;
 
         frmGroupHandle frmGroup;
@@ -131,7 +131,7 @@ namespace CefSharpDemo.GUI
                 }
             }
 
-            ResendData?.Invoke(lstSteps);
+            ResendData?.Invoke(txtUrl.Text.Trim(), lstSteps);
         }
         private void BtnInput_Click(object sender, EventArgs e)
         {
@@ -223,6 +223,7 @@ namespace CefSharpDemo.GUI
         {
             id = 0;
             this.fileName = fileName;
+            txtUrl.ResetText();
             fpBody.Controls.Clear();
 
             if (!System.IO.File.Exists(fileName))
@@ -231,6 +232,12 @@ namespace CefSharpDemo.GUI
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(fileName);
             XmlNode xmlPage = xmlDoc.SelectSingleNode($"/{Define.Page}");
+
+            /*Load Url*/
+            if (xmlPage.Attributes[Define.Url] != null)
+                txtUrl.Text = xmlPage.Attributes[Define.Url].Value;
+
+            /*Load XML*/
             XmlNodeList xmlGroups = xmlPage.SelectNodes($"{Define.Group}");
             foreach (XmlNode xmlGroup in xmlGroups)
             {
@@ -295,6 +302,13 @@ namespace CefSharpDemo.GUI
                 XmlNode xmlPage = xmlDoc.SelectSingleNode($"/{Define.Page}");
                 xmlPage.RemoveAll();
 
+                /*Save Url*/
+                if (xmlPage.Attributes[Define.Url] == null)
+                    xmlPage.Attributes.Append(xmlDoc.CreateAttribute(Define.Url));
+
+                xmlPage.Attributes[Define.Url].Value = txtUrl.Text.Trim();
+
+                /*Save XML*/
                 foreach (Control ctrGroup in fpBody.Controls)
                 {
                     #region Group
